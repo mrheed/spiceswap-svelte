@@ -4,7 +4,7 @@
 
 </script>
 <svelte:head>
-  {generatePageTitleMeta('Dashboard')}
+  {@html generatePageTitleMeta('Dashboard')}
 </svelte:head>
 
 <div class="px-4 pt-6">

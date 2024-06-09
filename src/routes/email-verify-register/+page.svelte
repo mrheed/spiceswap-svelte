@@ -65,7 +65,7 @@
 </script>
 
 <svelte:head>
-  {generatePageTitleMeta('Verify Email')}
+  {@html generatePageTitleMeta('Verify Email')}
 </svelte:head>
 
 <div

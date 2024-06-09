@@ -39,7 +39,7 @@
 </script>
 
 <svelte:head>
-  {generatePageTitleMeta('Login')}
+  {@html generatePageTitleMeta('Login')}
 </svelte:head>
 
 <div
