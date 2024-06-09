@@ -1,5 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
+	import { generatePageTitleMeta } from '$lib/utils.js';
 	import { authStore } from '../../stores/authStore.js';
 	import { loadingStore } from '../../stores/loadingStore.js';
 	import { loginUser } from './request.js';
@@ -38,7 +39,7 @@
 </script>
 
 <svelte:head>
-	<title>Spice Swap | Login</title>
+  {generatePageTitleMeta('Login')}
 </svelte:head>
 
 <div

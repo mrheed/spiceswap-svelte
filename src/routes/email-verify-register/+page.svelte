@@ -4,6 +4,7 @@
 	import { emailVerifyRegister, resendEmailVerifyRegister } from './request.js';
 	import { loadingStore } from '../../stores/loadingStore.js';
 	import Alert from '../../components/Alert.svelte';
+	import { generatePageTitleMeta } from '$lib/utils.js';
 	let verificationCode = '';
 	let alertState = {
 		type: '',
@@ -62,6 +63,10 @@
 
 	$: verificationCode;
 </script>
+
+<svelte:head>
+  {generatePageTitleMeta('Verify Email')}
+</svelte:head>
 
 <div
 	class="flex flex-col items-center justify-center px-6 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900"

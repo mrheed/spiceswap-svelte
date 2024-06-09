@@ -1,3 +1,12 @@
+<script>
+
+	import { generatePageTitleMeta } from "$lib/utils";
+
+</script>
+<svelte:head>
+  {generatePageTitleMeta('Dashboard')}
+</svelte:head>
+
 <div class="px-4 pt-6">
 	<div class="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
 		<!-- Main widget -->

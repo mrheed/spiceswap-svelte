@@ -1,9 +1,9 @@
 import { fetchV1 } from "$lib/fetch";
 
 // @ts-ignore
-export async function resendEmailVerifyRegister(credential) {
+export async function resendEmailVerifyRegister(token) {
   const body = {
-    credential: credential,
+    token: token,
   };
 
   try {

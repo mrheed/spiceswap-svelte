@@ -3,6 +3,7 @@
 	import { registerUser } from './request';
 	import { loadingStore } from '../../stores/loadingStore';
 	import { generateErrorMessage } from '$lib/fetch';
+	import { generatePageTitleMeta } from '$lib/utils';
 
 	let email = '';
 	let password = '';
@@ -43,6 +44,10 @@
 		}
 	}
 </script>
+
+<svelte:head>
+  {generatePageTitleMeta('Register')}
+</svelte:head>
 
 <div
 	class="flex flex-col items-center mt-8 justify-center px-6 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900"
