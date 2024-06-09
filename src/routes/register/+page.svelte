@@ -45,7 +45,7 @@
 </script>
 
 <div
-	class="flex flex-col items-center justify-center px-6 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900"
+	class="flex flex-col items-center mt-8 justify-center px-6 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900"
 >
 	<a
 		href="#"
