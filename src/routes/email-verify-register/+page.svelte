@@ -4,7 +4,7 @@
 	import { emailVerifyRegister, resendEmailVerifyRegister } from './request.js';
 	import { loadingStore } from '../../stores/loadingStore.js';
 	import Alert from '../../components/Alert.svelte';
-	import { generatePageTitleMeta } from '$lib/utils.js';
+	import { generatePageTitleMeta, getParamValue } from '$lib/utils.js';
 	let verificationCode = '';
 	let alertState = {
 		type: '',
@@ -54,8 +54,7 @@
 	}
 
 	onMount(() => {
-		const urlParams = new URLSearchParams($page.url.search);
-		const tokenFromUrl = urlParams.get('token');
+		const tokenFromUrl = getParamValue('token');
 		if (tokenFromUrl) {
 			verificationCode = tokenFromUrl;
 		}
