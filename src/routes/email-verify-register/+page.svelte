@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { emailVerifyRegister } from './request.js';
+	import { emailVerifyRegister, resendEmailVerifyRegister } from './request.js';
 	import { loadingStore } from '../../stores/loadingStore.js';
 	import Alert from '../../components/Alert.svelte';
 	let verificationCode = '';
@@ -31,6 +31,24 @@
 			alertState.type = 'error';
 		} finally {
 			loadingStore.setLoading(false);
+		}
+	}
+
+	async function handleResend() {
+		try {
+			const response = await resendEmailVerifyRegister(verificationCode);
+			const data = await response.json();
+			if (response.ok) {
+				alertState.message = 'A new verification code has been sent to your email.';
+				alertState.type = 'success';
+			} else {
+				alertState.message = data.message;
+				alertState.type = 'error';
+			}
+		} catch (error) {
+			alertState.message = 'Failed to resend the verification code. Please try again later.';
+			alertState.type = 'error';
+      console.error(error)
 		}
 	}
 
@@ -94,6 +112,29 @@
 							></path></svg
 						>
 						Verify
+					</button>
+					<button
+						type="button"
+						on:click={handleResend}
+						class="inline-flex items-center justify-center w-full px-5 py-3 text-base font-medium text-center text-primary rounded-lg bg-slate-200 hover:bg-slate-100 focus:ring-4 focus:ring-slate-300 sm:w-auto dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
+					>
+						<svg
+							class="w-5 h-5 mr-2 -ml-1"
+							aria-hidden="true"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="m15.141 6 5.518 4.95a1.05 1.05 0 0 1 0 1.549l-5.612 5.088m-6.154-3.214v1.615a.95.95 0 0 0 1.525.845l5.108-4.251a1.1 1.1 0 0 0 0-1.646l-5.108-4.251a.95.95 0 0 0-1.525.846v1.7c-3.312 0-6 2.979-6 6.654v1.329a.7.7 0 0 0 1.344.353 5.174 5.174 0 0 1 4.652-3.191l.004-.003Z"
+							/>
+						</svg>
+
+						Resend
 					</button>
 				</div>
 			</form>
