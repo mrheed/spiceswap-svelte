@@ -37,13 +37,13 @@
 					<li>
 						<a
 							class="inline-block md:hidden no-underline hover:text-black hover:underline py-2 px-4 menu-item"
-							href="/login">{$t('nav.auth.login')}</a
+							href="/login">{t('common.nav.login')}</a
 						>
 					</li>
 					<li>
 						<a
 							class="inline-block md:hidden no-underline hover:text-black hover:underline py-2 px-4 menu-item"
-							href="/register">{$t('nav.auth.register')}</a
+							href="/register">{t('common.nav.register')}</a
 						>
 					</li>
 				</ul>
@@ -71,13 +71,13 @@
 					<li>
 						<a
 							class="inline-block no-underline hover:text-black hover:underline py-2 px-4"
-							href="/login">{$t('nav.auth.login')}</a
+							href="/login">{t('common.nav.login')}</a
 						>
 					</li>
 					<li>
 						<a
 							class="inline-block no-underline hover:text-black hover:underline py-2 px-4"
-							href="/register">{$t('nav.auth.register')}</a
+							href="/register">{t('common.nav.register')}</a
 						>
 					</li>
 				</ul>

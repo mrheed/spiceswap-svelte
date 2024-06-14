@@ -4,6 +4,9 @@
 	import { authStore } from '@spiceswap/stores/authStore.js';
 	import { loadingStore } from '@spiceswap/stores/loadingStore.js';
 	import { loginUser } from '@spiceswap/api/auth';
+	import { t } from '@spiceswap/locale/i18n';
+	import { generateErrorMessage } from '@spiceswap/utils/fetch';
+	import Alert from '@spiceswap/components/Alert.svelte';
 
 	let email = '';
 	let password = '';
@@ -25,12 +28,11 @@
         authStore.login(data.results.accessToken)
 				goto('/dashboard');
 			} else {
-				alertState.message = data.message;
+				alertState.message = t('pages.login.error', { error: generateErrorMessage(data) });
 				alertState.type = 'error';
 			}
 		} catch (error) {
-			// @ts-ignore
-			alertState.message = error.message;
+			alertState.message = t('pages.login.error.general');
       alertState.type = 'error'
 		} finally {
       loadingStore.setLoading(false)
@@ -39,7 +41,7 @@
 </script>
 
 <svelte:head>
-  {@html generatePageTitleMeta('Login')}
+  {@html generatePageTitleMeta(t('pages.login.title'))}
 </svelte:head>
 
 <div
@@ -53,14 +55,12 @@
 	</a>
 	<!-- Card -->
 	<div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg border shadow dark:bg-gray-800">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Sign in to platform</h2>
-		{#if errorMessage}
-			<p class="text-red-500">{errorMessage}</p>
-		{/if}
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{t('pages.login.title')}</h2>
+		<Alert type={alertState.type} message={alertState.message} />
 		<form class="mt-8 space-y-6" on:submit={handleSubmit}>
 			<div>
 				<label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-					>Your username / email</label
+					>{t('pages.login.label.email')}</label
 				>
 				<input
 					type="text"
@@ -74,7 +74,7 @@
 			</div>
 			<div>
 				<label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-					>Your password</label
+					>{t('pages.login.label.password')}</label
 				>
 				<input
 					type="password"
@@ -98,22 +98,22 @@
 					/>
 				</div>
 				<div class="ml-3 text-sm">
-					<label for="remember" class="font-medium text-gray-900 dark:text-white">Remember me</label
+					<label for="remember" class="font-medium text-gray-900 dark:text-white">{t('pages.login.remember-me')}</label
 					>
 				</div>
 				<a href="#" class="ml-auto text-sm text-primary-700 hover:underline dark:text-primary-500"
-					>Lost Password?</a
+					>{t('pages.login.lost-password')}</a
 				>
 			</div>
 			<button
 				type="submit"
 				class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-				>Login to your account</button
+				>{t('pages.login.button.login')}</button
 			>
 			<div class="text-sm font-medium text-gray-500 dark:text-gray-400">
-				Not registered? <a
+				{t('pages.login.not-registered')} <a
 					href="/register"
-					class="text-primary-700 hover:underline dark:text-primary-500">Create account</a
+					class="text-primary-700 hover:underline dark:text-primary-500">{t('pages.login.create-account')}</a
 				>
 			</div>
 		</form>

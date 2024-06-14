@@ -4,22 +4,24 @@
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
 	import { generateErrorMessage } from '@spiceswap/utils/fetch';
 	import { generatePageTitleMeta } from '@spiceswap/utils/common';
+	import { t } from '@spiceswap/locale/i18n';
 
 	let email = '';
 	let password = '';
 	let confirmPassword = '';
 	let username = '';
 	let name = '';
-  let alertState = {
-    type: '',
-    message: ''
-  }
+	let alertState = {
+		type: '',
+		message: ''
+	};
 
 	// @ts-ignore
 	async function handleSubmit(event) {
 		event.preventDefault();
 		if (password !== confirmPassword) {
-			alert('Passwords do not match!');
+			alertState.message = t('pages.register.error.password-not-match');
+			alertState.type = 'error';
 			return;
 		}
 		try {
@@ -27,18 +29,15 @@
 			const response = await registerUser(username, name, email, password);
 			const data = await response.json();
 			if (response.ok) {
-				alertState.message =
-					'Registration successful. Please check your email for the verification code.';
+				alertState.message = t('pages.register.success');
 				alertState.type = 'success';
 			} else {
-				alertState.message = `Registration failed! ${generateErrorMessage(data)}`;
+				alertState.message = t('pages.register.error', { error: generateErrorMessage(data) });
 				alertState.type = 'error';
 			}
 		} catch (error) {
-			alertState.message = 'Registration failed';
+			alertState.message = t('pages.register.error.general');
 			alertState.type = 'error';
-			console.error('Registration failed', error);
-			// Show error message
 		} finally {
 			loadingStore.setLoading(false);
 		}
@@ -46,7 +45,7 @@
 </script>
 
 <svelte:head>
-  {@html generatePageTitleMeta('Register')}
+	{@html generatePageTitleMeta('Register')}
 </svelte:head>
 
 <div
@@ -59,13 +58,15 @@
 		<img src="/logo_text.png" alt="Logo" class="h-20" />
 	</a>
 	<!-- Card -->
-	<div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg border shadow dark:bg-gray-800">
-		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Create a Free Account</h2>
+	<div
+		class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg border shadow dark:bg-gray-800"
+	>
+		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{t('pages.register.title')}</h2>
 		<Alert type={alertState.type} message={alertState.message} />
 		<form class="mt-8 space-y-6" on:submit={handleSubmit}>
 			<div>
 				<label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-					>Your email</label
+					>{t('pages.register.label.email')}</label
 				>
 				<input
 					type="email"
@@ -79,7 +80,7 @@
 			</div>
 			<div>
 				<label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-					>Your username</label
+					>{t('pages.register.label.username')}</label
 				>
 				<input
 					type="text"
@@ -93,7 +94,7 @@
 			</div>
 			<div>
 				<label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-					>Your name</label
+					>{t('pages.register.label.name')}</label
 				>
 				<input
 					type="text"
@@ -107,7 +108,7 @@
 			</div>
 			<div>
 				<label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-					>Your password</label
+					>{t('pages.register.label.password')}</label
 				>
 				<input
 					type="password"
@@ -123,7 +124,7 @@
 				<label
 					for="confirm-password"
 					class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-					>Confirm password</label
+					>{t('pages.register.label.confirm-password')}</label
 				>
 				<input
 					type="password"
@@ -158,12 +159,12 @@
 			<button
 				type="submit"
 				class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-				>Create account</button
+				>{t('pages.register.button.register')}</button
 			>
 			<div class="text-sm font-medium text-gray-500 dark:text-gray-400">
-				Already have an account? <a
+				{t('pages.register.already-have-account')} <a
 					href="/login"
-					class="text-primary-700 hover:underline dark:text-primary-500">Login here</a
+					class="text-primary-700 hover:underline dark:text-primary-500">{t('pages.register.login')}</a
 				>
 			</div>
 		</form>

@@ -52,7 +52,7 @@
 				</NavUl>
 			{:else}
 				<form>
-					<Search size="md" class="mt-1 w-96 border focus:outline-none" placeholder={$t('nav.search')}/>
+					<Search size="md" class="mt-1 w-96 border focus:outline-none" placeholder={t('common.nav.search')}/>
 				</form>
 			{/if}
 		</div>

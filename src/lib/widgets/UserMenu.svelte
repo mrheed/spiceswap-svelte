@@ -35,9 +35,9 @@
 		<span class="block text-sm">{name}</span>
 		<span class="block text-sm font-light">{email}</span>
 	</DropdownHeader>
-	<DropdownItem on:click={() => goto('/')}>{$t('nav.account.home')}</DropdownItem>
-	<DropdownItem on:click={() => goto('/dashboard')}>{$t('nav.account.dashboard')}</DropdownItem>
-	<DropdownItem on:click={() => goto('/bookmark')}>{$t('nav.account.bookmark')}</DropdownItem>
+	<DropdownItem on:click={() => goto('/')}>{t('common.nav.home')}</DropdownItem>
+	<DropdownItem on:click={() => goto('/dashboard')}>{t('common.nav.dashboard')}</DropdownItem>
+	<DropdownItem on:click={() => goto('/bookmark')}>{t('common.nav.bookmark')}</DropdownItem>
 	<DropdownDivider />
-	<DropdownItem on:click={() => authStore.logout()}>{$t('nav.auth.logout')}</DropdownItem>
+	<DropdownItem on:click={() => authStore.logout()}>{t('common.nav.logout')}</DropdownItem>
 </Dropdown>

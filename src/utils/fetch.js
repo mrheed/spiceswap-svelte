@@ -22,7 +22,8 @@ export async function fetchV1(endpoint, options = {}) {
 //@ts-ignore
 export function generateErrorMessage(response) {
   const statuses = [
-    'BAD_REQUEST'
+    'BAD_REQUEST',
+    'NOT_FOUND'
   ]
   if (statuses.includes(response.status) && response.errors && response.errors.length > 0) {
     // @ts-ignore

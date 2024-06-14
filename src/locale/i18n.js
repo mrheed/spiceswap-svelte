@@ -1,4 +1,4 @@
-import { derived, writable } from "svelte/store";
+import { derived, writable, get } from "svelte/store";
 import translations from "./translations";
 
 export const locale = writable("id");
@@ -24,6 +24,7 @@ function translate(locale, key, vars) {
   return text;
 }
 
-export const t = derived(locale, ($locale) => (key, vars = {}) =>
-  translate($locale, key, vars)
-);
+export function t(key, vars = {}) {
+  const $locale = get(locale);
+  return translate($locale, key, vars);
+}
