@@ -1,43 +1,43 @@
 <script lang="ts">
-	import { imagesPath } from '$lib/variables';
+	import { imagesPath } from '@spiceswap/lib/variables';
 	import { Avatar, Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from 'flowbite-svelte';
 	import { authStore } from '../../stores/authStore';
+	import { goto } from '$app/navigation';
+	import { t } from '@spiceswap/locale/i18n';
 
-	// export let id: number = 0; // 1,
-	export let name: string = ''; // "Neil Sims",
+	export let name: string = 'User'; // "Neil Sims",
 	export let avatar: string = ''; // "neil-sims.png",
-	export let email: string = ''; // "neil.sims@flowbite.com",
-	// export let biography: string = ''; // "I love working with React and Flowbites to create efficient and user-friendly interfaces. In my spare time, I enjoys baking, hiking, and spending time with my family.",
-	// export let position: string = ''; // "Front-end developer",
-	// export let country: string = ''; // "United States",
-	// export let status: string = ''; // "Active"
+	export let email: string = 'user@email.com'; // "neil.sims@flowbite.com",
 </script>
 
 <button class="ms-3 rounded-full ring-gray-400 focus:ring-4 dark:ring-gray-600">
-	<Avatar size="sm" src={imagesPath(avatar, 'users')} tabindex="0" />
+	{#if avatar}
+		<Avatar size="sm" src={imagesPath(avatar, 'users')} tabindex="0" />
+	{:else}
+		<a href="#">
+			<svg
+				class="fill-current hover:text-black"
+				xmlns="http://www.w3.org/2000/svg"
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+			>
+				<circle fill="none" cx="12" cy="7" r="3" />
+				<path
+					d="M12 2C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5S14.757 2 12 2zM12 10c-1.654 0-3-1.346-3-3s1.346-3 3-3 3 1.346 3 3S13.654 10 12 10zM21 21v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h2v-1c0-2.757 2.243-5 5-5h4c2.757 0 5 2.243 5 5v1H21z"
+				/>
+			</svg>
+		</a>
+	{/if}
 </button>
 <Dropdown placement="bottom-end">
 	<DropdownHeader>
 		<span class="block text-sm">{name}</span>
-		<span class="block truncate text-sm font-medium">{email}</span>
+		<span class="block text-sm font-light">{email}</span>
 	</DropdownHeader>
-	<DropdownItem>Dashboard</DropdownItem>
-	<DropdownItem>Settings</DropdownItem>
-	<DropdownItem>Earnings</DropdownItem>
+	<DropdownItem on:click={() => goto('/')}>{$t('nav.account.home')}</DropdownItem>
+	<DropdownItem on:click={() => goto('/dashboard')}>{$t('nav.account.dashboard')}</DropdownItem>
+	<DropdownItem on:click={() => goto('/bookmark')}>{$t('nav.account.bookmark')}</DropdownItem>
 	<DropdownDivider />
-	<DropdownItem on:click={() => authStore.logout()}>Sign out</DropdownItem>
+	<DropdownItem on:click={() => authStore.logout()}>{$t('nav.auth.logout')}</DropdownItem>
 </Dropdown>
-
-<!--
-@component
-[Go to docs](https://flowbite-svelte-admin-dashboard.vercel.app/)
-## Props
-@prop export let id: number = 0;
-@prop export let name: string = '';
-@prop export let avatar: string = '';
-@prop export let email: string = '';
-@prop export let biography: string = '';
-@prop export let position: string = '';
-@prop export let country: string = '';
-@prop export let status: string = '';
--->

@@ -1,16 +1,34 @@
 <script>
-	import './app.css';
-	import './styles.css';
-	import { loadingStore } from '../stores/loadingStore.js';
+	import '@spiceswap/routes/app.css';
+	import '@spiceswap/routes/styles.css';
+	import { loadingStore } from '@spiceswap/stores/loadingStore.js';
 	import { browser } from '$app/environment';
-	import { authStore } from '../stores/authStore';
-	import { goto } from '$app/navigation';
-	import Footer from '../components/Footer.svelte';
+	import { authStore } from '@spiceswap/stores/authStore';
+	import Footer from '@spiceswap/components/Footer.svelte';
+	import { navigating } from '$app/stores';
+	import { writable } from 'svelte/store';
+	import ProgressBar from 'svelte-progress-bar';
+
+	let progress = null;
 
 	if (browser) {
 		if (localStorage.getItem('token')) {
 			authStore.login(localStorage.getItem('token'));
-			goto('/dashboard');
+		}
+	}
+
+	$: {
+		if (browser) {
+			if (!progress) {
+				progress = new ProgressBar({
+					target: document.querySelector('body')
+				});
+			}
+			if ($loadingStore.isLoading || $loadingStore.isFullPageLoading || $navigating) {
+				progress.start();
+			} else {
+				progress.complete();
+			}
 		}
 	}
 </script>
@@ -22,7 +40,7 @@
 		</main>
 		<Footer />
 	</div>
-	{#if $loadingStore.isLoading}
+	{#if $loadingStore.isFullPageLoading}
 		<div class="overlay show flex flex-col justify-center items-center">
 			<div class="loader mb-12"></div>
 			<p class="plus-jakarta font-medium text-center text-black text-xl text-white">Please wait</p>

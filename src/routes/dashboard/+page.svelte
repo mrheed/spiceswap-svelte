@@ -1,6 +1,5 @@
 <script>
-
-	import { generatePageTitleMeta } from "$lib/utils";
+	import { generatePageTitleMeta } from "@spiceswap/utils/common";
 
 </script>
 <svelte:head>

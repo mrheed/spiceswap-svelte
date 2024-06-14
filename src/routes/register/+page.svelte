@@ -1,9 +1,9 @@
 <script>
-	import Alert from '../../components/Alert.svelte';
-	import { registerUser } from './request';
-	import { loadingStore } from '../../stores/loadingStore';
-	import { generateErrorMessage } from '$lib/fetch';
-	import { generatePageTitleMeta } from '$lib/utils';
+	import Alert from '@spiceswap/components/Alert.svelte';
+	import { registerUser } from '@spiceswap/api/auth';
+	import { loadingStore } from '@spiceswap/stores/loadingStore';
+	import { generateErrorMessage } from '@spiceswap/utils/fetch';
+	import { generatePageTitleMeta } from '@spiceswap/utils/common';
 
 	let email = '';
 	let password = '';
@@ -53,13 +53,13 @@
 	class="flex flex-col items-center mt-8 justify-center px-6 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900"
 >
 	<a
-		href="#"
-		class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white"
+		href="/"
+		class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-16 dark:text-white"
 	>
 		<img src="/logo_text.png" alt="Logo" class="h-20" />
 	</a>
 	<!-- Card -->
-	<div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
+	<div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg border shadow dark:bg-gray-800">
 		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Create a Free Account</h2>
 		<Alert type={alertState.type} message={alertState.message} />
 		<form class="mt-8 space-y-6" on:submit={handleSubmit}>

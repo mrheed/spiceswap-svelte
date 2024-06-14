@@ -1,9 +1,9 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { generatePageTitleMeta } from '$lib/utils.js';
-	import { authStore } from '../../stores/authStore.js';
-	import { loadingStore } from '../../stores/loadingStore.js';
-	import { loginUser } from './request.js';
+	import { generatePageTitleMeta } from '@spiceswap/utils/common.js';
+	import { authStore } from '@spiceswap/stores/authStore.js';
+	import { loadingStore } from '@spiceswap/stores/loadingStore.js';
+	import { loginUser } from '@spiceswap/api/auth';
 
 	let email = '';
 	let password = '';
@@ -46,13 +46,13 @@
 	class="flex flex-col items-center mt-8 justify-center px-6 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900"
 >
 	<a
-		href="#"
-		class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white"
+		href="/"
+		class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-16 dark:text-white"
 	>
 		<img src="/logo_text.png" alt="Logo" class="h-20" />
 	</a>
 	<!-- Card -->
-	<div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
+	<div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg border shadow dark:bg-gray-800">
 		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Sign in to platform</h2>
 		{#if errorMessage}
 			<p class="text-red-500">{errorMessage}</p>

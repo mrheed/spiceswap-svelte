@@ -1,10 +1,9 @@
 <script>
-	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { emailVerifyRegister, resendEmailVerifyRegister } from './request.js';
-	import { loadingStore } from '../../stores/loadingStore.js';
-	import Alert from '../../components/Alert.svelte';
-	import { generatePageTitleMeta, getParamValue } from '$lib/utils.js';
+	import { emailVerifyRegister, resendEmailVerifyRegister } from '@spiceswap/api/auth';
+	import { loadingStore } from '@spiceswap/stores/loadingStore.js';
+	import Alert from '@spiceswap/components/Alert.svelte';
+	import { generatePageTitleMeta, getParamValue } from '@spiceswap/utils/common.js';
 	let verificationCode = '';
 	let alertState = {
 		type: '',
@@ -71,13 +70,13 @@
 	class="flex flex-col items-center justify-center px-6 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900"
 >
 	<a
-		href="#"
-		class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white"
+		href="/"
+		class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-16 dark:text-white"
 	>
 		<img src="/logo_text.png" alt="Logo" class="h-20" />
 	</a>
 	<!-- Card -->
-	<div class="w-full max-w-md bg-white rounded-lg shadow md:mt-0 xl:p-0 dark:bg-gray-800">
+	<div class="w-full max-w-md bg-white rounded-lg border shadow md:mt-0 xl:p-0 dark:bg-gray-800">
 		<div class="w-full p-6 sm:p-8">
 			<div class="flex space-x-4"></div>
 			<Alert type={alertState.type} message={alertState.message} />

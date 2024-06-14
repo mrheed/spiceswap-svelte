@@ -1,6 +1,7 @@
 <script>
-	import AppsMenu from '$lib/widgets/AppsMenu.svelte';
-	import UserMenu from '$lib/widgets/UserMenu.svelte';
+	import AppsMenu from '@spiceswap/lib/widgets/AppsMenu.svelte';
+	import UserMenu from '@spiceswap/lib/widgets/UserMenu.svelte';
+	import { t } from '@spiceswap/locale/i18n';
 	import {
 		DarkMode,
 		Dropdown,
@@ -19,7 +20,7 @@
 	export let list = false;
 </script>
 
-<Navbar {fluid} class="fixed text-black" color="default" let:NavContainer>
+<Navbar {fluid} class="fixed text-black shadow" color="default" let:NavContainer>
 	<NavContainer class="mb-px mt-px px-1" {fluid}>
 		<NavHamburger
 			onClick={() => (drawerHidden = !drawerHidden)}
@@ -51,7 +52,7 @@
 				</NavUl>
 			{:else}
 				<form>
-					<Search size="md" class="mt-1 w-96 border focus:outline-none" />
+					<Search size="md" class="mt-1 w-96 border focus:outline-none" placeholder={$t('nav.search')}/>
 				</form>
 			{/if}
 		</div>
