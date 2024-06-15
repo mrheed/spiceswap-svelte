@@ -18,7 +18,7 @@
 <div>
   {#if $authStore.isAuthenticated}
     <Navbar />
-    <div class="px-12 pt-20">
+    <div class="px-44 pt-20">
       <slot />
     </div>
   {/if}

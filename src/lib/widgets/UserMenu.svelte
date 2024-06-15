@@ -35,9 +35,35 @@
 		<span class="block text-sm">{name}</span>
 		<span class="block text-sm font-light">{email}</span>
 	</DropdownHeader>
-	<DropdownItem on:click={() => goto('/')}>{t('common.nav.home')}</DropdownItem>
-	<DropdownItem on:click={() => goto('/dashboard')}>{t('common.nav.dashboard')}</DropdownItem>
-	<DropdownItem on:click={() => goto('/bookmark')}>{t('common.nav.bookmark')}</DropdownItem>
+	<DropdownItem
+		on:click={() => goto('/')}
+		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
+	>
+		{t('common.nav.home')}</DropdownItem
+	>
+	<DropdownItem
+		on:click={() => goto('/dashboard')}
+		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
+	>
+		{t('common.nav.dashboard')}</DropdownItem
+	>
+	<DropdownItem
+		on:click={() => goto('/profile')}
+		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
+	>
+		{t('common.nav.profile')}</DropdownItem
+	>
+	<DropdownItem
+		on:click={() => goto('/bookmark')}
+		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
+	>
+		{t('common.nav.bookmark')}</DropdownItem
+	>
 	<DropdownDivider />
-	<DropdownItem on:click={() => authStore.logout()}>{t('common.nav.logout')}</DropdownItem>
+	<DropdownItem
+		on:click={() => authStore.logout()}
+		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-1000 dark:hover:bg-gray-600 flex gap-2 items-center"
+	>
+		{t('common.nav.logout')}</DropdownItem
+	>
 </Dropdown>

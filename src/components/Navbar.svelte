@@ -5,6 +5,7 @@
 	import {
 		DarkMode,
 		Dropdown,
+		DropdownDivider,
 		DropdownItem,
 		NavBrand,
 		NavHamburger,
@@ -13,7 +14,7 @@
 		Navbar,
 		Search
 	} from 'flowbite-svelte';
-	import { ChevronDownOutline } from 'flowbite-svelte-icons';
+	import { ChevronDownOutline, PlusOutline } from 'flowbite-svelte-icons';
 
 	export let fluid = false;
 	export let drawerHidden = false;
@@ -27,11 +28,7 @@
 			class="m-0 me-3 md:block lg:hidden"
 		/>
 		<NavBrand href="/" class={list ? 'w-40' : 'lg:w-60'}>
-			<img
-				src="/logo_text.png"
-				class="h-10"
-				alt="SpiceSwap Logo"
-			/>
+			<img src="/logo_text.png" class="h-10" alt="SpiceSwap Logo" />
 		</NavBrand>
 		<div class="hidden lg:block">
 			{#if list}
@@ -42,7 +39,7 @@
 					<NavLi href="#top">Settings</NavLi>
 					<NavLi class="cursor-pointer">
 						Dropdown
-						<ChevronDownOutline  class="ms-0 inline" />
+						<ChevronDownOutline class="ms-0 inline" />
 					</NavLi>
 					<Dropdown class="z-20 w-44">
 						<DropdownItem href="#top">Item 1</DropdownItem>
@@ -52,11 +49,22 @@
 				</NavUl>
 			{:else}
 				<form>
-					<Search size="md" class="mt-1 w-96 border focus:outline-none" placeholder={t('common.nav.search')}/>
+					<Search
+						size="md"
+						class="mt-1 w-96 border focus:outline-none"
+						placeholder={t('common.nav.search')}
+					/>
 				</form>
 			{/if}
 		</div>
 		<div class="ms-auto flex items-center text-gray-500 dark:text-gray-400 sm:order-2">
+			<button
+				type="button"
+				class="me-8 py-2 px-4 inline-flex items-center gap-x-2 text-sm rounded-lg border border-transparent bg-yellow-500 text-white hover:bg-yellow-600 disabled:opacity-50 disabled:pointer-events-none"
+			>
+				<PlusOutline />
+				{t('common.nav.create-recipe')}
+			</button>
 			<AppsMenu />
 			<UserMenu />
 		</div>

@@ -11,13 +11,11 @@
 	let email = '';
 	let password = '';
 	let remember = false;
-	let errorMessage = '';
   let alertState = {
     type: '',
     message: ''
   }
 
-	//@ts-ignore
 	async function handleSubmit(event) {
 		event.preventDefault();
 		try {

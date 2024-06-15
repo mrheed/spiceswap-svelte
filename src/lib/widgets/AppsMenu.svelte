@@ -1,38 +1,25 @@
 <script>
+	import { t } from '@spiceswap/locale/i18n';
 	import { MegaMenu, ToolbarButton } from 'flowbite-svelte';
 	import {
-		ArchiveSolid,
-		ArrowRightToBracketOutline,
-		CogOutline,
-		DollarOutline,
+		BookOpenOutline,
 		GridSolid,
-		InboxOutline,
-		ProfileCardOutline,
-		SalePercentOutline,
-		ShoppingBagSolid,
 		UsersGroupSolid
 	} from 'flowbite-svelte-icons';
 
 	const menu = [
-		{ name: 'Sales', href: '/sales', icon: ShoppingBagSolid },
-		{ name: 'Users', href: '/users', icon: UsersGroupSolid },
-		{ name: 'Inbox', href: '/inbox', icon: InboxOutline },
-		{ name: 'Profile', href: '/profile', icon: ProfileCardOutline },
-		{ name: 'Settings', href: '/settings', icon: CogOutline },
-		{ name: 'Prouducts', href: '/products', icon: ArchiveSolid },
-		{ name: 'Pricing', href: '/pricing', icon: DollarOutline },
-		{ name: 'Billing', href: '/billing', icon: SalePercentOutline },
-		{ name: 'Logout', href: '/logout', icon: ArrowRightToBracketOutline }
+		{ name: t('pages.dashboard.recipe.title'), href: '/dashboard/recipe', icon: BookOpenOutline },
+		{ name: t('pages.dashboard.users.title'), href: '/dashboard/users', icon: UsersGroupSolid },
 	];
 </script>
 
 <ToolbarButton size="lg" class="-mx-0.5 hover:text-gray-900 dark:hover:text-white">
 	<GridSolid size="lg" />
 </ToolbarButton>
-<MegaMenu items={menu} let:item>
+<MegaMenu items={menu} let:item class="border-gray-200">
 	<a
 		href={item.href}
-		class="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600"
+		class="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600 hover:no-underline"
 	>
 		<svelte:component
 			this={item.icon}

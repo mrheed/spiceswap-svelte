@@ -4,6 +4,8 @@
 	import { loadingStore } from '@spiceswap/stores/loadingStore.js';
 	import Alert from '@spiceswap/components/Alert.svelte';
 	import { generatePageTitleMeta, getParamValue } from '@spiceswap/utils/common.js';
+	import { t } from '@spiceswap/locale/i18n';
+	import { generateErrorMessage } from '@spiceswap/utils/fetch';
 	let verificationCode = '';
 	let alertState = {
 		type: '',
@@ -18,16 +20,16 @@
 			const response = await emailVerifyRegister(verificationCode);
 			const data = await response.json();
 			if (response.ok) {
-				alertState.message =
-					"Verification successful. Please return to the <a href='/login'>login page</a>.";
+				alertState.message = t('pages.email-verify-register.success');
 				alertState.type = 'success';
 			} else {
-				alertState.message = data.message;
+				alertState.message = t('pages.email-verify-register.error', {
+					error: generateErrorMessage(data)
+				});
 				alertState.type = 'error';
 			}
 		} catch (error) {
-			//@ts-ignore
-			alertState.message = error.message;
+			alertState.message = t('pages.email-verify-register.general');
 			alertState.type = 'error';
 		} finally {
 			loadingStore.setLoading(false);
@@ -39,16 +41,16 @@
 			const response = await resendEmailVerifyRegister(verificationCode);
 			const data = await response.json();
 			if (response.ok) {
-				alertState.message = 'A new verification code has been sent to your email.';
+				alertState.message = t('pages.email-verify-register.resend-success');
 				alertState.type = 'success';
 			} else {
-				alertState.message = data.message;
+				alertState.message = t('pages.email-verify-register.resend-error', { error: generateErrorMessage(data) });
 				alertState.type = 'error';
 			}
 		} catch (error) {
-			alertState.message = 'Failed to resend the verification code. Please try again later.';
+			alertState.message = t('pages.email-verify-register.resend-error-general');
 			alertState.type = 'error';
-      console.error(error)
+			console.error(error);
 		}
 	}
 
@@ -63,7 +65,7 @@
 </script>
 
 <svelte:head>
-  {@html generatePageTitleMeta('Verify Email')}
+	{@html generatePageTitleMeta(t('pages.email-verify-register.title'))}
 </svelte:head>
 
 <div
@@ -81,14 +83,14 @@
 			<div class="flex space-x-4"></div>
 			<Alert type={alertState.type} message={alertState.message} />
 			<p class="font-light text-sm mb-4">
-				Please enter your email verification code to complete registration.
+        {t('pages.email-verify-register.description')}
 			</p>
 			<form class="mt-4 space-y-6" on:submit={handleVerify}>
 				<div>
 					<label
 						for="profile-lock"
 						class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-						>Verification Code</label
+						>{t('pages.email-verify-register.label')}</label
 					>
 					<input
 						type="text"
@@ -114,7 +116,7 @@
 								d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"
 							></path></svg
 						>
-						Verify
+            {t('pages.email-verify-register.verify')}
 					</button>
 					<button
 						type="button"
@@ -137,7 +139,7 @@
 							/>
 						</svg>
 
-						Resend
+            {t('pages.email-verify-register.resend')}
 					</button>
 				</div>
 			</form>
