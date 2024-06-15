@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { imagesPath } from '@spiceswap/lib/variables';
 	import { Avatar, Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from 'flowbite-svelte';
-	import { authStore } from '../../stores/authStore';
 	import { goto } from '$app/navigation';
 	import { t } from '@spiceswap/locale/i18n';
+	import { authStore } from '@spiceswap/stores/authStore';
 
 	export let name: string = 'User'; // "Neil Sims",
 	export let avatar: string = ''; // "neil-sims.png",
@@ -36,22 +36,22 @@
 		<span class="block text-sm font-light">{email}</span>
 	</DropdownHeader>
 	<DropdownItem
-		on:click={() => goto('/')}
-		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
-	>
-		{t('common.nav.home')}</DropdownItem
-	>
-	<DropdownItem
-		on:click={() => goto('/dashboard')}
-		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
-	>
-		{t('common.nav.dashboard')}</DropdownItem
-	>
-	<DropdownItem
 		on:click={() => goto('/profile')}
 		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
 	>
 		{t('common.nav.profile')}</DropdownItem
+	>
+	<DropdownItem
+		on:click={() => goto('/my-recipe')}
+		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
+	>
+		{t('common.nav.my-recipe')}</DropdownItem
+	>
+	<DropdownItem
+		on:click={() => goto('/modification-request')}
+		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
+	>
+		{t('common.nav.modification-request')}</DropdownItem
 	>
 	<DropdownItem
 		on:click={() => goto('/bookmark')}

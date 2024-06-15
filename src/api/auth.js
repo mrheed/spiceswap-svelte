@@ -1,4 +1,4 @@
-import { fetchV1 } from "@spiceswap/utils/fetch";
+import { fetchV1, fetchV1Authorized } from "@spiceswap/utils/fetch";
 
 export async function loginUser(usernameOrEmail, password) {
   const body = {
@@ -21,7 +21,17 @@ export async function loginUser(usernameOrEmail, password) {
   }
 }
 
-// @ts-ignore
+export async function logoutUser() {
+  try {
+    const response = await fetchV1Authorized('auth/logout', {
+      method: 'POST',
+    });
+    return response;
+  } catch (error) {
+    console.error('Logout failed:', error);
+  }
+}
+
 export async function registerUser(username, name, email, password) {
   const body = {
     username: username,

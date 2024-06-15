@@ -1,4 +1,7 @@
+import { fetchV1Authorized } from '@spiceswap/utils/fetch';
 import { writable } from 'svelte/store';
+import { loadingStore } from './loadingStore';
+import { logoutUser } from '@spiceswap/api/auth';
 
 function createAuth() {
   const state = {
@@ -6,12 +9,18 @@ function createAuth() {
   }
   const { subscribe, set } = writable(state);
 
-  function logout() {
-    localStorage.removeItem('token');
-    set({ ...state, isAuthenticated: false });
+  async function logout() {
+    loadingStore.setLoading(true)
+    try {
+      await logoutUser();
+      localStorage.removeItem('token');
+      set({ ...state, isAuthenticated: false });
+    } catch (error) {
+    } finally {
+      loadingStore.setLoading(false)
+    }
   }
 
-  //@ts-ignore
   function login(accessToken) {
     localStorage.setItem('token', accessToken);
     set({ ...state, isAuthenticated: true });
@@ -21,7 +30,6 @@ function createAuth() {
     subscribe,
     logout,
     login,
-    //@ts-ignore
     setAuth: (value) => set({ ...state, isAuthenticated: value }),
   };
 }

@@ -1,4 +1,5 @@
 <script>
+	import AppsMenu from '@spiceswap/lib/widgets/AppsMenu.svelte';
 	import UserMenu from '@spiceswap/lib/widgets/UserMenu.svelte';
 	import { t } from '@spiceswap/locale/i18n';
 	import { authStore } from '@spiceswap/stores/authStore';
@@ -34,18 +35,20 @@
 							>About</a
 						>
 					</li>
-					<li>
-						<a
-							class="inline-block md:hidden no-underline hover:text-black hover:underline py-2 px-4 menu-item"
-							href="/login">{t('common.nav.login')}</a
-						>
-					</li>
-					<li>
-						<a
-							class="inline-block md:hidden no-underline hover:text-black hover:underline py-2 px-4 menu-item"
-							href="/register">{t('common.nav.register')}</a
-						>
-					</li>
+					{#if !$authStore.isAuthenticated}
+						<li>
+							<a
+								class="inline-block md:hidden no-underline hover:text-black hover:underline py-2 px-4 menu-item"
+								href="/login">{t('common.nav.login')}</a
+							>
+						</li>
+						<li>
+							<a
+								class="inline-block md:hidden no-underline hover:text-black hover:underline py-2 px-4 menu-item"
+								href="/register">{t('common.nav.register')}</a
+							>
+						</li>
+					{/if}
 				</ul>
 			</nav>
 		</div>
@@ -60,7 +63,8 @@
 		</div>
 
 		{#if $authStore.isAuthenticated}
-			<div class="order-2 md:order-3 flex items-center" id="nav-content">
+			<div class="order-2 md:order-3 flex items-center gap-2" id="nav-content">
+				<AppsMenu />
 				<UserMenu />
 			</div>
 		{:else}

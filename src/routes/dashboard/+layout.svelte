@@ -1,25 +1,25 @@
 <script>
 	import { goto } from '$app/navigation';
-	import Navbar from '../../components/Navbar.svelte';
-  import { authStore } from '../../stores/authStore';
-  import { browser } from '$app/environment';
+	import Navbar from '@spiceswap/components/Navbar.svelte';
+	import { authStore } from '@spiceswap/stores/authStore';
+	import { browser } from '$app/environment';
 
-  function handleLogout() {
-    if (browser) {
-      goto('/login');
-    }
-  }
+	function handleLogout() {
+		if (browser) {
+			goto('/login');
+		}
+	}
 
-  $: if (!$authStore.isAuthenticated) {
-    handleLogout();
-  }
+	$: if (!$authStore.isAuthenticated) {
+		handleLogout();
+	}
 </script>
 
 <div>
-  {#if $authStore.isAuthenticated}
-    <Navbar />
-    <div class="px-44 pt-20">
-      <slot />
-    </div>
-  {/if}
+	{#if $authStore.isAuthenticated}
+		<Navbar />
+		<div class="px-44 pt-20">
+			<slot />
+		</div>
+	{/if}
 </div>

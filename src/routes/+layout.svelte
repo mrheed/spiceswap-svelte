@@ -6,7 +6,6 @@
 	import { authStore } from '@spiceswap/stores/authStore';
 	import Footer from '@spiceswap/components/Footer.svelte';
 	import { navigating } from '$app/stores';
-	import { writable } from 'svelte/store';
 	import ProgressBar from 'svelte-progress-bar';
 
 	let progress = null;

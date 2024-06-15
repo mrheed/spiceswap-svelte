@@ -3,20 +3,24 @@
 	import { MegaMenu, ToolbarButton } from 'flowbite-svelte';
 	import {
 		BookOpenOutline,
+		GridOutline,
 		GridSolid,
+		HomeOutline,
 		UsersGroupSolid
 	} from 'flowbite-svelte-icons';
 
 	const menu = [
-		{ name: t('pages.dashboard.recipe.title'), href: '/dashboard/recipe', icon: BookOpenOutline },
-		{ name: t('pages.dashboard.users.title'), href: '/dashboard/users', icon: UsersGroupSolid },
+		{ name: t('common.nav.home'), href: '/', icon: HomeOutline },
+		{ name: t('common.nav.dashboard'), href: '/dashboard', icon: GridOutline },
+		{ name: t('common.nav.recipe'), href: '/dashboard/recipe', icon: BookOpenOutline },
+		{ name: t('common.nav.users'), href: '/dashboard/users', icon: UsersGroupSolid },
 	];
 </script>
 
 <ToolbarButton size="lg" class="-mx-0.5 hover:text-gray-900 dark:hover:text-white">
 	<GridSolid size="lg" />
 </ToolbarButton>
-<MegaMenu items={menu} let:item class="border-gray-200">
+<MegaMenu items={menu} let:item class="border-gray-200" style="z-index: 99">
 	<a
 		href={item.href}
 		class="block rounded-lg p-4 text-center hover:bg-gray-100 dark:hover:bg-gray-600 hover:no-underline"
