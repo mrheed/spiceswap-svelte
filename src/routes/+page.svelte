@@ -193,15 +193,6 @@
 		display: block;
 	}
 
-	.hover\:grow {
-		transition: all 0.3s;
-		transform: scale(1);
-	}
-
-	.hover\:grow:hover {
-		transform: scale(1.02);
-	}
-
 	.carousel-open:checked + .carousel-item {
 		position: static;
 		opacity: 100;

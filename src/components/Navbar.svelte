@@ -21,7 +21,7 @@
 		if (browser) {
 			const urlParams = new URLSearchParams($page.url.search);
 			const keywordParam = urlParams.get('keyword');
-			keyword.set(keywordParam);
+			keyword.set(keywordParam ? keywordParam : '');
 		}
 	});
 

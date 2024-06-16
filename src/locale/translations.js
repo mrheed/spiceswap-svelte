@@ -1,6 +1,7 @@
 export default {
   id: {
     "common.error": "Terjadi Kesalahan: {{error}}",
+    "common.review": "Review",
     "common.nav.search": "Temukan Resep atau Bahan Favorit Anda",
     "common.nav.home": "Beranda",
     "common.nav.dashboard": "Dasbor",

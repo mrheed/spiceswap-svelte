@@ -1,17 +1,21 @@
 <script>
-	import { onMount } from 'svelte';
+	import { afterUpdate } from 'svelte';
+
 	export let props;
-	const { src, alt, ...restProps } = props;
+	let { src, alt, ...restProps } = props;
 
 	let loaded = false;
 	let failed = false;
 	let loading = false;
 
-	onMount(() => {
+	$: {
+		({ src, alt, ...restProps } = props);
+		loading = true;
+		loaded = false;
+		failed = false;
+
 		const img = new Image();
 		img.src = src;
-		loading = true;
-
 		img.onload = () => {
 			loading = false;
 			loaded = true;
@@ -20,7 +24,7 @@
 			loading = false;
 			failed = true;
 		};
-	});
+	}
 </script>
 
 {#if loaded}
