@@ -7,13 +7,13 @@
 	import { writable } from 'svelte/store';
 	import _ from 'lodash';
 	import { page } from '$app/stores';
-	import Bookmark from '@spiceswap/components/Recipe/Bookmark.svelte';
 	import RecipeGrid from '@spiceswap/components/Recipe/RecipeGrid.svelte';
+	import RecipePagination from '@spiceswap/components/Recipe/RecipePagination.svelte';
 
 	const recipes = writable([]);
 	const pageNumber = writable(0);
 	const sortBy = writable('newest');
-	const pageable = writable({});
+	const totalPages = writable(0);
 
 	async function browseRecipes(pageNumber, keyword, sortBy) {
 		try {
@@ -22,7 +22,7 @@
 			const data = await response.json();
 			if (response.ok) {
 				recipes.set(data.results.content);
-				pageable.set(data.results.pageable);
+				totalPages.set(data.results.totalPages);
 			} else {
 				showToast(
 					t('pages.dashboard.recipe.browse-recipes.error'),
@@ -44,6 +44,10 @@
 	const debouncedBrowseRecipes = _.debounce((pageNumber, keyword, sortBy) => {
 		browseRecipes(pageNumber, keyword, sortBy);
 	}, 300);
+
+	function handlePageChange(_pageNumber) {
+		pageNumber.set(_pageNumber - 1);
+	}
 
 	$: {
 		const urlParams = new URLSearchParams($page.url.search);
@@ -69,4 +73,7 @@
 		</select>
 	</form>
 	<RecipeGrid recipes={$recipes} />
+	<div class="flex justify-center mt-16">
+		<RecipePagination number={$pageNumber + 1} totalPages={$totalPages} onPageChange={handlePageChange} />
+	</div>
 </div>

@@ -70,7 +70,7 @@ export default {
     "pages.dashboard.recipe.create.information.visibility.private": "Pribadi",
     "pages.dashboard.recipe.create.information.thumbnail": "Thumbnail",
     "pages.dashboard.recipe.create.information.thumbnail.upload": "<span class='font-semibold'>Klik atau seret file</span> untuk mengunggah",
-    "pages.dashboard.recipe.create.information.thumbnail.format": "Format SVG, PNG, JPG, atau GIF (MAX. 800x400px)",
+    "pages.dashboard.recipe.create.information.thumbnail.format": "Format PNG, JPG, atau JPEG",
     "pages.dashboard.recipe.create.detail.portion": "Porsi",
     "pages.dashboard.recipe.create.ingredients.add": "Tambah Bahan",
     "pages.dashboard.recipe.create.ingredients.add.name": "Nama Bahan",
