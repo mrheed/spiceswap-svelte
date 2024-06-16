@@ -42,7 +42,7 @@
 		{t('common.nav.profile')}</DropdownItem
 	>
 	<DropdownItem
-		on:click={() => goto('/my-recipe')}
+		on:click={() => goto('/dashboard/recipe/my-recipes')}
 		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
 	>
 		{t('common.nav.my-recipe')}</DropdownItem

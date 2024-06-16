@@ -95,4 +95,5 @@ button:focus:not(:focus-visible) {
 .svelte-progress-bar {
   height: 3px!important;
   background-color: var(--color-theme-1);
+  z-index: 1001!important;
 }

@@ -1,3 +1,5 @@
+import { toasts } from "svelte-toasts";
+
 /**
  * Generates a meta tag for the page title.
  * @param {string} title - The title of the page.
@@ -17,4 +19,44 @@ export function getParamValue(param) {
     }
   }
   return null;
+}
+
+/**
+ * Converts a File object to a base64 encoded string.
+ * @param {File} file - The file to be converted.
+ * @returns {Promise<string>} - A promise that resolves with the base64 encoded string.
+ */
+export function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.onerror = error => {
+      reject(error);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+
+export function showToast(title, description, type = 'info') {
+  toasts.add({
+    title: title,
+    description: description,
+    duration: 3000,
+    placement: 'bottom-right',
+    showProgress: true,
+    type: type,
+    onClick: () => { },
+    onRemove: () => { },
+  });
+}
+
+export function getUrlParams(keyword = '') {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (keyword) {
+    return urlParams.get('keyword');
+  }
+  return urlParams;
 }

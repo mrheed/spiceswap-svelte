@@ -6,7 +6,7 @@
 </script>
 
 <!--Nav-->
-<nav id="header" class="w-full z-30 top-0 py-1">
+<nav id="header" class="w-full z-30 top-0 py-1" style="z-index: 1000;">
 	<div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3">
 		<label for="menu-toggle" class="cursor-pointer md:hidden block">
 			<svg
@@ -65,7 +65,7 @@
 		{#if $authStore.isAuthenticated}
 			<div class="order-2 md:order-3 flex items-center gap-2" id="nav-content">
 				<AppsMenu />
-				<UserMenu />
+				<UserMenu email={$authStore.user.email} name={$authStore.user.name} />
 			</div>
 		{:else}
 			<div class="hidden md:flex md:items-center md:w-auto w-full md:order-3" id="menu-2">

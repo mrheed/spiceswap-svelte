@@ -4,7 +4,8 @@
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
 	import { pageStore } from '@spiceswap/stores/pageStore';
-	import { generatePageTitleMeta } from '@spiceswap/utils/common';
+	import { fileToBase64, generatePageTitleMeta, showToast } from '@spiceswap/utils/common';
+	import { generateErrorMessage } from '@spiceswap/utils/fetch';
 	import { Button, Input, Label, Modal, Radio, RadioButton, Textarea } from 'flowbite-svelte';
 	import { FloppyDiskOutline, PlusOutline, TrashBinOutline } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
@@ -79,7 +80,7 @@
 		const recipeData = {
 			recipeName: $name,
 			about: $description,
-			thumbnailImage: $thumbnail,
+			thumbnailImage: $thumbnail ? await fileToBase64($thumbnail) : '',
 			portion: $portion,
 			visibility: $visibility,
 			ingredientDetailRequests: $ingredients.map((ingredient) => ({
@@ -94,14 +95,26 @@
 		try {
 			loadingStore.setLoading(true);
 			const response = await saveRecipe(recipeData);
-			const json = await response.json();
+			const data = await response.json();
 			if (response.ok) {
-				console.log(json);
+				showToast(
+					t('pages.dashboard.recipe.create.save.success.title'),
+					data.message,
+					'success'
+				);
 			} else {
-				console.error(json);
+				showToast(
+					t('pages.dashboard.recipe.create.save.error.title'),
+					generateErrorMessage(data),
+					'error'
+				);
 			}
 		} catch (error) {
-			console.error(error);
+			showToast(
+				t('pages.dashboard.recipe.create.save.error.title'),
+				t('pages.dashboard.recipe.create.save.error.general', { error: error.message }),
+				'error'
+			);
 		} finally {
 			loadingStore.setLoading(false);
 		}

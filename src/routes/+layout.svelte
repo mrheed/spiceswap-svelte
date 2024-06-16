@@ -1,4 +1,5 @@
 <script>
+	import ProgressBar from 'svelte-progress-bar';
 	import '@spiceswap/routes/app.css';
 	import '@spiceswap/routes/styles.css';
 	import { loadingStore } from '@spiceswap/stores/loadingStore.js';
@@ -6,15 +7,17 @@
 	import { authStore } from '@spiceswap/stores/authStore';
 	import Footer from '@spiceswap/components/Footer.svelte';
 	import { navigating } from '$app/stores';
-	import ProgressBar from 'svelte-progress-bar';
+	import { ToastContainer } from 'svelte-toasts';
+	import Toast from '@spiceswap/components/Toast.svelte';
+	import { onMount } from 'svelte';
 
 	let progress = null;
 
-	if (browser) {
-		if (localStorage.getItem('token')) {
-			authStore.login(localStorage.getItem('token'));
+	onMount(async () => {
+		if (localStorage.getItem('refreshToken')) {
+      await authStore.refreshPage()
 		}
-	}
+	});
 
 	$: {
 		if (browser) {
@@ -37,6 +40,9 @@
 		<main>
 			<slot />
 		</main>
+		<ToastContainer let:data>
+			<Toast {data} />
+		</ToastContainer>
 		<Footer />
 	</div>
 	{#if $loadingStore.isFullPageLoading}

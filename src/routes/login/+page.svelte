@@ -7,39 +7,50 @@
 	import { t } from '@spiceswap/locale/i18n';
 	import { generateErrorMessage } from '@spiceswap/utils/fetch';
 	import Alert from '@spiceswap/components/Alert.svelte';
+	import { onMount } from 'svelte';
 
 	let email = '';
 	let password = '';
 	let remember = false;
-  let alertState = {
-    type: '',
-    message: ''
-  }
+	let alertState = {
+		type: '',
+		message: ''
+	};
+
+	onMount(() => {
+		setTimeout(() => {
+			if ($authStore.isAuthenticated) {
+				goto('/dashboard');
+			}
+		}, 2000);
+	});
 
 	async function handleSubmit(event) {
 		event.preventDefault();
 		try {
-      loadingStore.setLoading(true)
+			loadingStore.setLoading(true);
 			const response = await loginUser(email, password);
 			const data = await response.json();
 			if (response.ok) {
-        authStore.login(data.results.accessToken)
+				localStorage.setItem('accessToken', data.results.accessToken);
+				localStorage.setItem('refreshToken', data.results.refreshToken);
+				authStore.login();
 				goto('/dashboard');
 			} else {
 				alertState.message = t('pages.login.error', { error: generateErrorMessage(data) });
 				alertState.type = 'error';
 			}
 		} catch (error) {
-			alertState.message = t('pages.login.error.general');
-      alertState.type = 'error'
+			alertState.message = t('common.error', { error: error.message });
+			alertState.type = 'error';
 		} finally {
-      loadingStore.setLoading(false)
-    }
+			loadingStore.setLoading(false);
+		}
 	}
 </script>
 
 <svelte:head>
-  {@html generatePageTitleMeta(t('pages.login.title'))}
+	{@html generatePageTitleMeta(t('pages.login.title'))}
 </svelte:head>
 
 <div
@@ -52,7 +63,9 @@
 		<img src="/logo_text.png" alt="Logo" class="h-20" />
 	</a>
 	<!-- Card -->
-	<div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg border shadow dark:bg-gray-800">
+	<div
+		class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg border shadow dark:bg-gray-800"
+	>
 		<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{t('pages.login.title')}</h2>
 		<Alert type={alertState.type} message={alertState.message} />
 		<form class="mt-8 space-y-6" on:submit={handleSubmit}>
@@ -96,7 +109,8 @@
 					/>
 				</div>
 				<div class="ml-3 text-sm">
-					<label for="remember" class="font-medium text-gray-900 dark:text-white">{t('pages.login.remember-me')}</label
+					<label for="remember" class="font-medium text-gray-900 dark:text-white"
+						>{t('pages.login.remember-me')}</label
 					>
 				</div>
 				<a href="#" class="ml-auto text-sm text-primary-700 hover:underline dark:text-primary-500"
@@ -109,9 +123,9 @@
 				>{t('pages.login.button.login')}</button
 			>
 			<div class="text-sm font-medium text-gray-500 dark:text-gray-400">
-				{t('pages.login.not-registered')} <a
-					href="/register"
-					class="text-primary-700 hover:underline dark:text-primary-500">{t('pages.login.create-account')}</a
+				{t('pages.login.not-registered')}
+				<a href="/register" class="text-primary-700 hover:underline dark:text-primary-500"
+					>{t('pages.login.create-account')}</a
 				>
 			</div>
 		</form>

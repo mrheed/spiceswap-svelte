@@ -93,3 +93,29 @@ export async function emailVerifyRegister(token) {
   }
 }
 
+export async function checkAccessToken() {
+  try {
+    const response = await fetchV1('auth/refresh-token', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('refreshToken')}`
+      }
+    })
+    return response
+  } catch (error) {
+    console.error('Check access token failed:', error);
+    throw error;
+  }
+}
+
+export async function getUser() {
+  try {
+    const response = await fetchV1Authorized('me', {
+      method: 'GET',
+    })
+    return response
+  } catch (error) {
+    console.error('Get user failed:', error);
+    throw error;
+  }
+}

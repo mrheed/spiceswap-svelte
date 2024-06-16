@@ -1,0 +1,118 @@
+<script>
+	import { onMount } from 'svelte';
+	import { linear } from 'svelte/easing';
+	import { tweened } from 'svelte/motion';
+
+	export let data = {
+		type: 'info'
+	};
+	if (!['info', 'success', 'warning', 'error'].includes(data.type)) {
+		data.type = 'info';
+	}
+	const typeData = {
+		info: {
+			icon: `
+      <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:bg-blue-800 dark:text-blue-200">
+        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.147 15.085a7.159 7.159 0 0 1-6.189 3.307A6.713 6.713 0 0 1 3.1 15.444c-2.679-4.513.287-8.737.888-9.548A4.373 4.373 0 0 0 5 1.608c1.287.953 6.445 3.218 5.537 10.5 1.5-1.122 2.706-3.01 2.853-6.14 1.433 1.049 3.993 5.395 1.757 9.117Z"/>
+        </svg>
+        <span class="sr-only">Fire icon</span>
+      </div>`
+		},
+		success: {
+			icon: `
+      <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+        </svg>
+        <span class="sr-only">Check icon</span>
+      </div>`
+		},
+		warning: {
+			icon: `
+      <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"/>
+        </svg>
+        <span class="sr-only">Warning icon</span>
+      </div>
+      `
+		},
+		error: {
+			icon: `
+      <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+        </svg>
+        <span class="sr-only">Error icon</span>
+      </div>`
+		}
+	};
+
+	const progress = tweened(1, {
+		duration: data.duration,
+		easing: linear
+	});
+
+	onMount(() => {
+		progress.set(0, { duration: data.duration });
+	});
+
+	const onRemove = (e) => {
+		e.stopPropagation();
+		data.remove();
+		if (typeof data.onRemove === 'function') data.onRemove();
+	};
+	const onClick = () => {
+		if (typeof data.onClick === 'function') data.onClick();
+	};
+</script>
+
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<div
+	id="toast-{data.uid}"
+	class="flex w-full max-w-xs p-4 mb-4 relative text-gray-500 bg-white rounded-lg shadow shadow dark:text-gray-4000 dark:bg-gray-800"
+	role="alert"
+	on:click={onClick}
+	style="pointer-events: auto;"
+>
+	{@html typeData[data.type].icon}
+	<div class="ms-3 text-sm font-normal">
+		{#if data.title}
+			<div class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">{data.title}</div>
+		{/if}
+		<div class="mb-2 text-sm font-normal">{data.description}</div>
+	</div>
+	<button
+		type="button"
+		on:click={onRemove}
+		class="ms-auto -mx-1.5 -my-1.5 bg-white hover:cursor-pointer text-gray-4000 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+		data-dismiss-target="#toast-{data.uid}"
+		aria-label="Close"
+	>
+		<span class="sr-only">Close</span>
+		<svg
+			class="w-3 h-3"
+			aria-hidden="true"
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 14 14"
+		>
+			<path
+				stroke="currentColor"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="2"
+				d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+			/>
+		</svg>
+	</button>
+	{#if data.showProgress}
+		<progress
+			class="absolute bottom-0 left-0 w-full"
+			style="height: {data.duration > 0 ? '4px' : 0}"
+			value={$progress}
+		/>
+	{/if}
+</div>

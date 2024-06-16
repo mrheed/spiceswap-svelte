@@ -17,7 +17,7 @@ export async function fetchV1(endpoint, options = {}) {
 }
 
 export async function fetchV1Authorized(endpoint, options = {}) {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('accessToken');
   if (token) {
     options.headers = {
       ...options.headers,
