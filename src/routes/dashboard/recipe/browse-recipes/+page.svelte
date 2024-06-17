@@ -2,7 +2,7 @@
 	import { browseRecipesPaginate } from '@spiceswap/api/recipe';
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
-	import { showToast } from '@spiceswap/utils/common';
+	import { generatePageTitleMeta, showToast } from '@spiceswap/utils/common';
 	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import { writable } from 'svelte/store';
 	import _ from 'lodash';
@@ -51,6 +51,10 @@
 		debouncedBrowseRecipes($pageNumber, keyword, $sortBy);
 	}
 </script>
+
+<svelte:head>
+  {@html generatePageTitleMeta(t('pages.dashboard.recipe.browse-recipes.title'))}
+</svelte:head>
 
 <div class="my-8 px-16">
 	<h1 class="font-bold">{t('pages.dashboard.recipe.browse-recipes.title')}</h1>

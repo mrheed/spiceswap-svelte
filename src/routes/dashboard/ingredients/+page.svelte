@@ -13,6 +13,7 @@
 		convertToIndonesianDate,
 		convertToTitleCase,
 		fileToBase64,
+		generatePageTitleMeta,
 		showToast,
 		urlToFile
 	} from '@spiceswap/utils/common';
@@ -176,6 +177,10 @@
 	$: debounceFetchDataIngredients($pageNumber, $keyword);
 	$: $toggleFetch && debounceFetchDataIngredients($pageNumber, $keyword);
 </script>
+
+<svelte:head>
+  {@html generatePageTitleMeta(t('pags.dashboard.ingredients.title'))}
+</svelte:head>
 
 <section class="bg-gray-50 dark:bg-gray-900 my-8">
 	<div class="mx-auto max-w-screen-xl">

@@ -3,7 +3,7 @@
 	import { getBrowseRecipeDetail } from '@spiceswap/api/recipe';
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
-	import { showToast } from '@spiceswap/utils/common';
+	import { generatePageTitleMeta, showToast } from '@spiceswap/utils/common';
 	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
@@ -27,6 +27,10 @@
 		});
 	});
 </script>
+
+<svelte:head>
+  {@html generatePageTitleMeta(t('pages.dashboard.recipe.browse-recipes.detail.title'))}
+</svelte:head>
 
 <div class="px-16 mt-8">
 	<h1 class="font-bold">{t('pages.dashboard.recipe.browse-recipes.detail.title')}</h1>
