@@ -4,6 +4,7 @@
 	import { authStore } from '@spiceswap/stores/authStore';
 	import { browser } from '$app/environment';
 	import { onMount, tick } from 'svelte';
+	import { loadingStore } from '@spiceswap/stores/loadingStore';
 
 	let loaded = false;
 
@@ -13,12 +14,9 @@
 		}
 	}
 
-	onMount(async () => {
-		setTimeout(() => {
-			loaded = true;
-		}, 1000);
-	});
-
+	$: if (!$authStore.checkingSession) {
+		loaded = true;
+	}
 	$: if (!$authStore.isAuthenticated && loaded) {
 		handleLogout();
 	}

@@ -14,9 +14,7 @@
 	let progress = null;
 
 	onMount(async () => {
-		if (localStorage.getItem('refreshToken')) {
-			await authStore.refreshPage();
-		}
+		await authStore.refreshPage();
 	});
 
 	$: {

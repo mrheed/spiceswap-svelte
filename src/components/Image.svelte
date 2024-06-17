@@ -38,7 +38,7 @@
 		/>
 	{:else if loading}
 		<div
-			class="w-full h-full show flex flex-col justify-center items-center"
+			class="w-full h-full show flex flex-col justify-center items-center py-16"
 			style="background-color: rgba(0,0,0,.3);"
 		>
 			<div class="loader mb-12"></div>

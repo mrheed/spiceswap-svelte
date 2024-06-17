@@ -3,7 +3,7 @@
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
 	import { showToast } from '@spiceswap/utils/common';
-	import { generateErrorMessage } from '@spiceswap/utils/fetch';
+	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import { writable } from 'svelte/store';
 	import _ from 'lodash';
 	import { page } from '$app/stores';
@@ -17,8 +17,7 @@
 	const totalPages = writable(0);
 
 	async function browseRecipes(pageNumber, keyword, sortBy) {
-		try {
-			loadingStore.setLoading(true);
+		await loadingStore.wrapFn(async () => {
 			const response = await browseRecipesPaginate(pageNumber, keyword, sortBy);
 			const data = await response.json();
 			if (response.ok) {
@@ -27,19 +26,11 @@
 			} else {
 				showToast(
 					t('pages.dashboard.recipe.browse-recipes.error'),
-					generateErrorMessage(data),
+					generateMessageFromResponse(data),
 					'error'
 				);
 			}
-		} catch (error) {
-			showToast(
-				t('pages.dashboard.recipe.browse-recipes.error'),
-				t('common.error', { error: error.message }),
-				'error'
-			);
-		} finally {
-			loadingStore.setLoading(false);
-		}
+		});
 	}
 
 	const debouncedBrowseRecipes = _.debounce((pageNumber, keyword, sortBy) => {
@@ -50,9 +41,9 @@
 		pageNumber.set(_pageNumber - 1);
 	}
 
-  function detailLink(recipe) {
-    return `/dashboard/recipe/browse-recipes/${recipe.recipeSlug}`
-  }
+	function detailLink(recipe) {
+		return `/dashboard/recipe/browse-recipes/${recipe.recipeSlug}`;
+	}
 
 	$: {
 		const urlParams = new URLSearchParams($page.url.search);
@@ -64,7 +55,7 @@
 <div class="my-8 px-16">
 	<h1 class="font-bold">{t('pages.dashboard.recipe.browse-recipes.title')}</h1>
 	<form class="flex flex-col gap-2 mt-8 w-1/4">
-    <Label class="font-light">{t('pages.dashboard.recipe.browse-recipes.sort-by')}</Label>
+		<Label class="font-light">{t('pages.dashboard.recipe.browse-recipes.sort-by')}</Label>
 		<select
 			id="sort-by"
 			bind:value={$sortBy}
@@ -75,8 +66,12 @@
 			<option value="popular">{t('pages.dashboard.recipe.browse-recipes.popular')}</option>
 		</select>
 	</form>
-	<RecipeGrid recipes={$recipes} detailLink={detailLink} />
+	<RecipeGrid recipes={$recipes} {detailLink} />
 	<div class="flex justify-center mt-8">
-		<RecipePagination number={$pageNumber + 1} totalPages={$totalPages} onPageChange={handlePageChange} />
+		<RecipePagination
+			number={$pageNumber + 1}
+			totalPages={$totalPages}
+			onPageChange={handlePageChange}
+		/>
 	</div>
 </div>

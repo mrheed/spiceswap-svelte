@@ -3,7 +3,7 @@
 	import Image from '../Image.svelte';
 	import Bookmark from './Bookmark.svelte';
 	import { t } from '@spiceswap/locale/i18n';
-	import { convertToIndonesianDate } from '@spiceswap/utils/common';
+	import { convertToIndonesianDate, convertToTitleCase } from '@spiceswap/utils/common';
 
 	export let recipes = [];
 	export let withBookmark = true;
@@ -25,7 +25,7 @@
 				/>
 			</div>
 			<div class="flex flex-col justify-between pb-4 px-8 gap-2 -translate-y-16">
-				<a href={detailLink(recipe)} class="font-bold text-gray-600">{recipe.recipeName}</a>
+				<a href={detailLink(recipe)} class="font-bold text-gray-600">{convertToTitleCase(recipe.recipeName)}</a>
 				<span class="text-gray-600 font-light text-sm"
 					>{convertToIndonesianDate(recipe.createdAt)}</span
 				>

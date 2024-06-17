@@ -5,7 +5,7 @@
 	import { loadingStore } from '@spiceswap/stores/loadingStore.js';
 	import { loginUser } from '@spiceswap/api/auth';
 	import { t } from '@spiceswap/locale/i18n';
-	import { generateErrorMessage } from '@spiceswap/utils/fetch';
+	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import Alert from '@spiceswap/components/Alert.svelte';
 	import { onMount } from 'svelte';
 
@@ -17,18 +17,9 @@
 		message: ''
 	};
 
-	onMount(() => {
-		setTimeout(() => {
-			if ($authStore.isAuthenticated) {
-				goto('/dashboard');
-			}
-		}, 2000);
-	});
-
 	async function handleSubmit(event) {
 		event.preventDefault();
-		try {
-			loadingStore.setLoading(true);
+		await loadingStore.wrapFn(async () => {
 			const response = await loginUser(email, password);
 			const data = await response.json();
 			if (response.ok) {
@@ -37,14 +28,15 @@
 				authStore.login();
 				goto('/dashboard');
 			} else {
-				alertState.message = t('pages.login.error', { error: generateErrorMessage(data) });
+				alertState.message = t('pages.login.error', { error: generateMessageFromResponse(data) });
 				alertState.type = 'error';
 			}
-		} catch (error) {
-			alertState.message = t('common.error', { error: error.message });
-			alertState.type = 'error';
-		} finally {
-			loadingStore.setLoading(false);
+		});
+	}
+
+	$: {
+		if ($authStore.isAuthenticated) {
+			goto('/dashboard');
 		}
 	}
 </script>

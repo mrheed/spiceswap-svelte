@@ -3,40 +3,26 @@
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
 	import { showToast } from '@spiceswap/utils/common';
-	import { generateErrorMessage } from '@spiceswap/utils/fetch';
+	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import { BookmarkOutline, BookmarkSolid } from 'flowbite-svelte-icons';
 	import { writable } from 'svelte/store';
 
 	export let recipe;
 
-	const bookmarkStatus = writable(!!recipe.canBookmark);
+	const bookmarkStatus = writable(!!recipe.isBookmarked);
 
-	const toggleBookmark = async () => {
-		try {
-			loadingStore.setLoading(true);
+	const toggleBookmark = async () =>
+		await loadingStore.wrapFn(async () => {
 			const response = await bookmarkRecipe(recipe.recipeSlug);
 			const data = await response.json();
 			if (response.ok) {
 				bookmarkStatus.update((status) => !status);
-				showToast(
-					t('common.recipe.bookmark.success'),
-          generateErrorMessage(data),
-					'success'
-				);
+				showToast(t('common.recipe.bookmark.success'), generateMessageFromResponse(data), 'success');
 			} else {
-				showToast(t('common.recipe.bookmark.error'), generateErrorMessage(data), 'error');
+				showToast(t('common.recipe.bookmark.error'), generateMessageFromResponse(data), 'error');
 			}
-		} catch (error) {
-			console.error(error);
-			showToast(
-				t('common.recipe.bookmark.error'),
-				t('common.error', { error: error.message }),
-				'error'
-			);
-		} finally {
-			loadingStore.setLoading(false);
-		}
-	};
+		});
+
 </script>
 
 <button on:click={toggleBookmark}>

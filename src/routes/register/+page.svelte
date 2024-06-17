@@ -2,7 +2,7 @@
 	import Alert from '@spiceswap/components/Alert.svelte';
 	import { registerUser } from '@spiceswap/api/auth';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
-	import { generateErrorMessage } from '@spiceswap/utils/fetch';
+	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import { generatePageTitleMeta } from '@spiceswap/utils/common';
 	import { t } from '@spiceswap/locale/i18n';
 
@@ -32,7 +32,7 @@
 				alertState.message = t('pages.register.success');
 				alertState.type = 'success';
 			} else {
-				alertState.message = t('pages.register.error', { error: generateErrorMessage(data) });
+				alertState.message = t('pages.register.error', { error: generateMessageFromResponse(data) });
 				alertState.type = 'error';
 			}
 		} catch (error) {

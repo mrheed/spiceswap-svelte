@@ -5,7 +5,7 @@
 	import Alert from '@spiceswap/components/Alert.svelte';
 	import { generatePageTitleMeta, getParamValue } from '@spiceswap/utils/common.js';
 	import { t } from '@spiceswap/locale/i18n';
-	import { generateErrorMessage } from '@spiceswap/utils/fetch';
+	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	let verificationCode = '';
 	let alertState = {
 		type: '',
@@ -24,7 +24,7 @@
 				alertState.type = 'success';
 			} else {
 				alertState.message = t('pages.email-verify-register.error', {
-					error: generateErrorMessage(data)
+					error: generateMessageFromResponse(data)
 				});
 				alertState.type = 'error';
 			}
@@ -44,7 +44,7 @@
 				alertState.message = t('pages.email-verify-register.resend-success');
 				alertState.type = 'success';
 			} else {
-				alertState.message = t('pages.email-verify-register.resend-error', { error: generateErrorMessage(data) });
+				alertState.message = t('pages.email-verify-register.resend-error', { error: generateMessageFromResponse(data) });
 				alertState.type = 'error';
 			}
 		} catch (error) {

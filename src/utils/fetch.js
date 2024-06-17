@@ -29,13 +29,9 @@ export async function fetchV1Authorized(endpoint, options = {}) {
   return response
 }
 
-export function generateErrorMessage(response) {
-  const statuses = [
-    'BAD_REQUEST',
-    'NOT_FOUND'
-  ]
-  if (statuses.includes(response.status) && response.errors && response.errors.length > 0) {
-    return response.errors.map(error => `${error.errorMessage}`).join('<br> ');
+export function generateMessageFromResponse(response) {
+  if (response.errors && response.errors.length > 0) {
+    return response.errors.map(error => `${error.field} ${error.errorMessage}`).join('<br> ');
   }
   return response.message || 'An unknown error occurred';
 }

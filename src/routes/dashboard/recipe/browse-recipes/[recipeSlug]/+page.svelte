@@ -4,7 +4,7 @@
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
 	import { showToast } from '@spiceswap/utils/common';
-	import { generateErrorMessage } from '@spiceswap/utils/fetch';
+	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
@@ -12,8 +12,7 @@
 	const recipe = writable({});
 
 	onMount(async () => {
-		try {
-			loadingStore.setLoading(true);
+		await loadingStore.wrapFn(async () => {
 			const response = await getBrowseRecipeDetail(recipeSlug);
 			const data = await response.json();
 			if (response.ok) {
@@ -21,19 +20,11 @@
 			} else {
 				showToast(
 					t('pages.dashboard.recipe.browse-recipes.detail.error'),
-					generateErrorMessage(data),
+					generateMessageFromResponse(data),
 					'error'
 				);
 			}
-		} catch (error) {
-			showToast(
-				t('pages.dashboard.recipe.browse-recipes.detail.error'),
-				t('common.error', { error }),
-				'error'
-			);
-		} finally {
-			loadingStore.setLoading(false);
-		}
+		});
 	});
 </script>
 

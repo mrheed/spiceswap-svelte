@@ -1,4 +1,4 @@
-import { fetchV1Authorized, generateErrorMessage } from '@spiceswap/utils/fetch';
+import { fetchV1Authorized, generateMessageFromResponse } from '@spiceswap/utils/fetch';
 import { writable } from 'svelte/store';
 import { loadingStore } from './loadingStore';
 import { checkAccessToken, getUser, logoutUser } from '@spiceswap/api/auth';
@@ -8,26 +8,22 @@ import { t } from '@spiceswap/locale/i18n';
 function createAuth() {
   const state = {
     isAuthenticated: false,
+    checkingSession: true,
     user: {}
   }
   const { subscribe, set, update } = writable(state);
 
   async function logout() {
-    loadingStore.setLoading(true)
-    try {
+    await loadingStore.wrapFn(async () => {
       await logoutUser();
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      set({ ...state, isAuthenticated: false });
-    } catch (error) {
-      showToast(t('auth.logout.error'), t('common.error', { error: error.message }), 'error');
-    } finally {
-      loadingStore.setLoading(false)
-    }
+      update(state => ({ ...state, isAuthenticated: false }));
+    })
   }
 
   function login() {
-    set({ ...state, isAuthenticated: true });
+    update(state => ({ ...state, isAuthenticated: true }));
   }
 
   async function refreshAccessToken() {
@@ -52,20 +48,18 @@ function createAuth() {
   }
 
   async function handleAuthError(data, messageKey) {
-    showToast(t(messageKey), generateErrorMessage(data), 'error');
+    showToast(t(messageKey), generateMessageFromResponse(data), 'error');
     await authStore.logout();
   }
 
   async function refreshPage() {
-    loadingStore.setLoading(true);
-    try {
-      await refreshAccessToken();
-      await fetchUserData();
-    } catch (error) {
-      showToast(t('auth.logout.error'), t('common.error', { error: error.message }), 'error');
-    } finally {
-      loadingStore.setLoading(false);
-    }
+    await loadingStore.wrapFn(async () => {
+      if (localStorage.getItem('accessToken')) {
+        await refreshAccessToken();
+        await fetchUserData();
+      }
+      update(state => ({ ...state, checkingSession: false }))
+    })
   }
 
   return {

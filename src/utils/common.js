@@ -27,7 +27,7 @@ export function getParamValue(param) {
  * @returns {Promise<string>} - A promise that resolves with the base64 encoded string.
  */
 export function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
       resolve(reader.result);
@@ -35,10 +35,26 @@ export function fileToBase64(file) {
     reader.onerror = error => {
       reject(error);
     };
-    reader.readAsDataURL(file);
+    if (file instanceof File) {
+      reader.readAsDataURL(file);
+    } else {
+      reader.readAsDataURL(await urlToFile(file))
+    }
   });
 }
 
+/**
+ * Converts an image URL to a File object.
+ * @param {string} imageUrl - The URL of the image to be converted.
+ * @returns {Promise<File>} - A promise that resolves with the File object.
+ */
+export async function urlToFile(imageUrl) {
+  const response = await fetch(imageUrl);
+  const blob = await response.blob();
+  const fileName = imageUrl.split('/').pop();
+  const file = new File([blob], fileName, { type: blob.type });
+  return file;
+}
 
 export function showToast(title, description, type = 'info') {
   toasts.add({
@@ -66,7 +82,7 @@ export function getUrlParams(keyword = '') {
  * @param {string} dateStr - The date string to be converted.
  * @returns {string} - The date in Indonesian format 'Hari, tanggal bulan tahun'.
  */
-export function convertToIndonesianDate(dateStr) {
+export function convertToIndonesianDate(dateStr, opts = {}) {
   const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
   const months = [
     'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
@@ -74,10 +90,25 @@ export function convertToIndonesianDate(dateStr) {
   ];
 
   const date = new Date(dateStr);
-  const dayName = days[date.getUTCDay()];
-  const day = date.getUTCDate();
-  const month = months[date.getUTCMonth()];
-  const year = date.getUTCFullYear();
+  const dayName = days[date.getDay()];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  if (opts.withTime) {
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${dayName}, ${day} ${month} ${year} ${hours}:${minutes}`;
+  }
 
   return `${dayName}, ${day} ${month} ${year}`;
+}
+
+/**
+ * Converts a string into a title case.
+ * @param {string} string - The string to be converted.
+ * @returns {string} - The string in title case.
+ */
+export function convertToTitleCase(string) {
+  return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }

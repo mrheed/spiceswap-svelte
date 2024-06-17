@@ -9,7 +9,12 @@
 	import { pageStore } from '@spiceswap/stores/pageStore';
 	import { getUrlParams } from '@spiceswap/utils/common';
 	import { NavBrand, Navbar, Search } from 'flowbite-svelte';
-	import { CirclePlusOutline, CirclePlusSolid, GridPlusOutline, PlusOutline } from 'flowbite-svelte-icons';
+	import {
+		CirclePlusOutline,
+		CirclePlusSolid,
+		GridPlusOutline,
+		PlusOutline
+	} from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
@@ -63,9 +68,9 @@
 				<button
 					type="button"
 					on:click={handleCreateRecipe}
-					class="me-8 py-2 px-3 inline-flex gap-x-2 items-center text-sm rounded-md border border-transparent bg-red-700 text-white hover:bg-red-800 transition-all disabled:opacity-50 disabled:pointer-events-none"
+					class="me-8 gap-2 flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
 				>
-					<CirclePlusSolid title={t('common.nav.create-recipe')} />
+					<PlusOutline size="sm" title={t('common.nav.create-recipe')} />
 					{t('common.nav.create-recipe')}
 				</button>
 			{/if}
