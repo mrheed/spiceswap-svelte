@@ -60,3 +60,18 @@ export const bookmarkRecipe = async (recipeSlug) => {
     throw error;
   }
 }
+
+export const getBrowseRecipeDetail = async (recipeSlug) => {
+  try {
+    const response = await fetchV1Authorized(`browse-recipe/recipe-detail/${recipeSlug}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}

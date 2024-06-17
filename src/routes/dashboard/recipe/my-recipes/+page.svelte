@@ -50,7 +50,7 @@
 <div class="my-8 px-48">
 	<h1 class="font-bold">{t('pages.dashboard.recipe.my-recipes.title')}</h1>
 	<RecipeGrid recipes={$recipes} withBookmark={false} gridCount={3}/>
-	<div class="flex justify-center mt-16">
+	<div class="flex justify-center mt-8">
 		<RecipePagination
 			number={$page + 1}
 			totalPages={$totalPages}

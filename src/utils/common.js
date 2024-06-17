@@ -60,3 +60,24 @@ export function getUrlParams(keyword = '') {
   }
   return urlParams;
 }
+
+/**
+ * Converts a date string in the format 'YYYY-MM-DD' to an Indonesian date format.
+ * @param {string} dateStr - The date string to be converted.
+ * @returns {string} - The date in Indonesian format 'Hari, tanggal bulan tahun'.
+ */
+export function convertToIndonesianDate(dateStr) {
+  const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  const months = [
+    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+  ];
+
+  const date = new Date(dateStr);
+  const dayName = days[date.getUTCDay()];
+  const day = date.getUTCDate();
+  const month = months[date.getUTCMonth()];
+  const year = date.getUTCFullYear();
+
+  return `${dayName}, ${day} ${month} ${year}`;
+}

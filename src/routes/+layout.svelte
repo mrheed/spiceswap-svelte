@@ -15,7 +15,7 @@
 
 	onMount(async () => {
 		if (localStorage.getItem('refreshToken')) {
-      await authStore.refreshPage()
+			await authStore.refreshPage();
 		}
 	});
 
@@ -35,7 +35,7 @@
 	}
 </script>
 
-<div class="app">
+<div class="app bg-slate-50">
 	<div class="flex justify-between flex-col" style="min-height: 100vh">
 		<main>
 			<slot />

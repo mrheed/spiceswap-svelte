@@ -15,7 +15,10 @@ export default {
     "common.nav.users": "Pengguna",
     "common.nav.my-recipe": "Resep Saya",
     "common.nav.modification-request": "Permintaan Modifikasi",
+    "common.nav.ingredients": "Bahan",
+    "common.recipe.bookmark.title": "Bookmark",
     "common.recipe.bookmark.error": "Gagal Menyimpan Resep",
+    "common.recipe.bookmark.success": "Berhasil Menyimpan Resep",
     "auth.token_expired": "Token Anda telah kadaluarsa. Silakan masuk lagi.",
     "auth.logout.error": "Proses keluar gagal",
     "auth.user.error": "Gagal mengambil informasi pengguna",
@@ -91,5 +94,7 @@ export default {
     "pages.dashboard.recipe.browse-recipes.newest": "Terbaru",
     "pages.dashboard.recipe.browse-recipes.oldest": "Terlama",
     "pages.dashboard.recipe.browse-recipes.popular": "Populer",
+    "pages.dashboard.recipe.browse-recipes.detail.title": "Detail Resep",
+    "pages.dashboard.recipe.browse-recipes.detail.error": "Gagal mengambil detail resep",
   }
 }

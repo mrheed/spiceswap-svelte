@@ -18,6 +18,11 @@
 			const data = await response.json();
 			if (response.ok) {
 				bookmarkStatus.update((status) => !status);
+				showToast(
+					t('common.recipe.bookmark.success'),
+          generateErrorMessage(data),
+					'success'
+				);
 			} else {
 				showToast(t('common.recipe.bookmark.error'), generateErrorMessage(data), 'error');
 			}
@@ -34,13 +39,13 @@
 	};
 </script>
 
-<button
-	on:click={toggleBookmark}
-	class="bg-transparent text-gray-100 hover:text-gray-300 border border-gray-100 hover:border-gray-300 rounded px-2 py-1"
->
+<button on:click={toggleBookmark}>
 	{#if $bookmarkStatus}
-		<BookmarkOutline class="w-6 h-6" />
+		<BookmarkOutline
+			strokeWidth="1"
+			class="w-6 h-6 text-gray-500 hover:text-yellow-400 transition-all"
+		/>
 	{:else}
-		<BookmarkSolid class="w-6 h-6" />
+		<BookmarkSolid class="w-6 h-6 text-yellow-300 hover:text-yellow-400 transition-all" />
 	{/if}
 </button>

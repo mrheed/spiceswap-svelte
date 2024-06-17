@@ -3,6 +3,7 @@
 	import { MegaMenu, ToolbarButton } from 'flowbite-svelte';
 	import {
 		BookOpenOutline,
+		ClipboardListOutline,
 		GridOutline,
 		GridSolid,
 		HomeOutline,
@@ -13,6 +14,11 @@
 		{ name: t('common.nav.home'), href: '/', icon: HomeOutline },
 		{ name: t('common.nav.dashboard'), href: '/dashboard', icon: GridOutline },
 		{ name: t('common.nav.recipe'), href: '/dashboard/recipe', icon: BookOpenOutline },
+		{
+			name: t('common.nav.ingredients'),
+			href: '/dashboard/ingredients',
+			icon: ClipboardListOutline
+		},
 		{ name: t('common.nav.users'), href: '/dashboard/users', icon: UsersGroupSolid },
 	];
 </script>
