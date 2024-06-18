@@ -1,5 +1,6 @@
 <script>
-	import Navbar from '@spiceswap/components/Home/Navbar.svelte';
+	import { SCENES } from '@spiceswap/common/constant';
+	import Navbar from '@spiceswap/components/Navbar.svelte';
 	import { t } from '@spiceswap/locale/i18n';
 	import { pageStore } from '@spiceswap/stores/pageStore';
 	import { generatePageTitleMeta } from '@spiceswap/utils/common';
@@ -45,9 +46,7 @@
 	];
 
 	onMount(() => {
-		pageStore.set({
-			scene: 'home'
-		});
+		pageStore.setScene(SCENES.HOME);
 	});
 </script>
 
@@ -55,9 +54,10 @@
 	{@html generatePageTitleMeta(t('pages.home.title'))}
 </svelte:head>
 
-<body class="bg-white text-gray-600 work-sans leading-normal text-base tracking-normal">
+<div class="relative">
 	<Navbar />
-
+</div>
+<div class="bg-white text-gray-600 work-sans leading-normal text-base tracking-normal pt-32">
 	<section
 		class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right"
 		style="max-width:1600px; height: 32rem; background-image: url('https://images.unsplash.com/photo-1422190441165-ec2956dc9ecc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80');"
@@ -181,7 +181,7 @@
 			</p>
 		</div>
 	</section>
-</body>
+</div>
 
 <style>
 	.work-sans {

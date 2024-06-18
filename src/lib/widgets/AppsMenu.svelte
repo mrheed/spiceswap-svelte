@@ -1,5 +1,7 @@
 <script>
+	import { ROLES, ROUTE_TO_SCENE, SCENES_FORBIDDEN } from '@spiceswap/common/constant';
 	import { t } from '@spiceswap/locale/i18n';
+	import { authStore } from '@spiceswap/stores/authStore';
 	import { MegaMenu, ToolbarButton } from 'flowbite-svelte';
 	import {
 		BookOpenOutline,
@@ -10,7 +12,7 @@
 		UsersGroupSolid
 	} from 'flowbite-svelte-icons';
 
-	const menu = [
+	let menu = [
 		{ name: t('common.nav.home'), href: '/', icon: HomeOutline },
 		{ name: t('common.nav.dashboard'), href: '/dashboard', icon: GridOutline },
 		{ name: t('common.nav.recipe'), href: '/dashboard/recipe', icon: BookOpenOutline },
@@ -19,8 +21,18 @@
 			href: '/dashboard/ingredients',
 			icon: ClipboardListOutline
 		},
-		{ name: t('common.nav.users'), href: '/dashboard/users', icon: UsersGroupSolid },
+		{ name: t('common.nav.users'), href: '/dashboard/users', icon: UsersGroupSolid }
 	];
+
+	$: {
+		if (ROLES[$authStore.user.role]) {
+			menu = menu.filter((item) => {
+				const scene = ROUTE_TO_SCENE[item.href];
+				if (scene === false) return true;
+				return SCENES_FORBIDDEN[$authStore.user.role].includes(scene) === false;
+			});
+		}
+	}
 </script>
 
 <ToolbarButton size="lg" class="-mx-0.5 hover:text-gray-900 dark:hover:text-white">

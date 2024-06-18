@@ -1,6 +1,7 @@
 <!-- Start of Selection -->
 <script>
 	import { saveRecipe } from '@spiceswap/api/recipe';
+	import { SCENES } from '@spiceswap/common/constant';
 	import Dropzone from '@spiceswap/components/Dropzone.svelte';
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
@@ -34,9 +35,7 @@
 	});
 
 	onMount(() => {
-		pageStore.set({
-			scene: 'create_recipe'
-		});
+		pageStore.setScene(SCENES.CREATE_RECIPE);
 	});
 
 	function handleInputChange(event, store, key = null) {

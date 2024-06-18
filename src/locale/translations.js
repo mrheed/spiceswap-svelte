@@ -23,9 +23,12 @@ export default {
     "common.recipe.bookmark.success": "Resep Berhasil Disimpan",
     "common.dropzone.upload": "<span class='font-semibold'>Klik atau seret file</span> untuk mengunggah",
     "common.dropzone.format": "Format tidak terbatas",
-    "common.table.pagination.range": "Menampilkan <span class='font-semibold text-gray-900 dark:text-white'>{{min}}-{{max}}</span> dari <span class='font-semibold text-gray-900 dark:text-white'>{{total}}</span>",
+    "common.table.pagination.range": "Menampilkan <span class='font-semibold text-gray-900 dark:text-white'>{{min}}-{{max}}</span> dari <span class='font-semibold text-gray-90 dark:text-white'>{{total}}</span>",
     "common.table.pagination.previous": "Sebelumnya",
     "common.table.pagination.next": "Selanjutnya",
+    "forbidden.title": "Forbidden",
+    "forbidden.description": "Maaf, Anda tidak memiliki izin untuk mengakses area ini! Sepertinya Anda memerlukan kunci naga untuk melanjutkan.",
+    "forbidden.button": "Kembali ke Dasbor",
     "auth.token_expired": "Token Anda telah kadaluarsa. Silakan masuk lagi.",
     "auth.logout.error": "Proses keluar gagal",
     "auth.user.error": "Gagal mengambil informasi pengguna",
@@ -130,5 +133,8 @@ export default {
     "pages.dashboard.ingredients.edit-ingredient.name": "Nama Bahan",
     "pages.dashboard.ingredients.edit-ingredient.image": "Gambar",
     "pages.dashboard.ingredients.edit-ingredient.image.format": "Format PNG, JPG, atau JPEG"
+  },
+  en: {
+
   }
 }

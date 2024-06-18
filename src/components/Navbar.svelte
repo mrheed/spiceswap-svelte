@@ -7,14 +7,8 @@
 	import { t } from '@spiceswap/locale/i18n';
 	import { authStore } from '@spiceswap/stores/authStore';
 	import { pageStore } from '@spiceswap/stores/pageStore';
-	import { getUrlParams } from '@spiceswap/utils/common';
 	import { NavBrand, Navbar, Search } from 'flowbite-svelte';
-	import {
-		CirclePlusOutline,
-		CirclePlusSolid,
-		GridPlusOutline,
-		PlusOutline
-	} from 'flowbite-svelte-icons';
+	import { PlusOutline } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
@@ -36,7 +30,7 @@
 
 	function handleSearch(e) {
 		e.preventDefault();
-		goto(`/dashboard/recipe/browse-recipes?keyword=${$keyword}`);
+		goto(`/browse/recipes?keyword=${$keyword}`);
 	}
 
 	$: $pageStore.scene;
@@ -58,24 +52,45 @@
 				<Search
 					bind:value={$keyword}
 					size="md"
-					class="mt-1 w-96 border focus:outline-none"
+					class="font-light mt-1 w-96 border focus:outline-none bg-white"
 					placeholder={t('common.nav.search')}
 				/>
 			</form>
 		</div>
 		<div class="ms-auto flex items-center text-gray-500 dark:text-gray-400 sm:order-2">
-			{#if $pageStore.scene !== 'create_recipe'}
-				<button
-					type="button"
-					on:click={handleCreateRecipe}
-					class="me-8 gap-2 flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-				>
-					<PlusOutline size="sm" title={t('common.nav.create-recipe')} />
-					{t('common.nav.create-recipe')}
-				</button>
+			{#if $authStore.isAuthenticated}
+				{#if $pageStore.scene !== 'create_recipe'}
+					<button
+						type="button"
+						on:click={handleCreateRecipe}
+						class="me-8 gap-2 flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+					>
+						<PlusOutline size="sm" title={t('common.nav.create-recipe')} />
+						{t('common.nav.create-recipe')}
+					</button>
+				{/if}
+				<AppsMenu />
+				<UserMenu email={$authStore.user.email} name={$authStore.user.name} />
+			{:else}
+				<div class="hidden md:flex md:items-center md:w-auto w-full md:order-3" id="menu-2">
+					<ul
+						class="hidden md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0"
+					>
+						<li>
+							<a
+								class="inline-block no-underline hover:text-black hover:underline py-2 px-4"
+								href="/login">{t('common.nav.login')}</a
+							>
+						</li>
+						<li>
+							<a
+								class="inline-block no-underline hover:text-black hover:underline py-2 px-4"
+								href="/register">{t('common.nav.register')}</a
+							>
+						</li>
+					</ul>
+				</div>
 			{/if}
-			<AppsMenu />
-			<UserMenu email={$authStore.user.email} name={$authStore.user.name} />
 		</div>
 	</NavContainer>
 </Navbar>

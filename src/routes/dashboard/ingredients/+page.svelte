@@ -14,8 +14,7 @@
 		convertToTitleCase,
 		fileToBase64,
 		generatePageTitleMeta,
-		showToast,
-		urlToFile
+		showToast
 	} from '@spiceswap/utils/common';
 	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import { Modal, Button, DropdownItem, Search, Dropdown, Label, Input } from 'flowbite-svelte';
@@ -24,6 +23,9 @@
 	import _ from 'lodash';
 	import ModalDelete from '@spiceswap/components/Modal/ModalDelete.svelte';
 	import Image from '@spiceswap/components/Image.svelte';
+	import { onMount } from 'svelte';
+	import { pageStore } from '@spiceswap/stores/pageStore';
+	import { SCENES } from '@spiceswap/common/constant';
 
 	const toggleFetch = writable(false);
 	const keyword = writable('');
@@ -174,12 +176,11 @@
 
 	const debounceFetchDataIngredients = _.debounce(getDataIngredients, 500);
 
-	$: debounceFetchDataIngredients($pageNumber, $keyword);
-	$: $toggleFetch && debounceFetchDataIngredients($pageNumber, $keyword);
+	$: $toggleFetch || (pageStore.isCurrentScene(SCENES.INGREDIENTS) && debounceFetchDataIngredients($pageNumber, $keyword));
 </script>
 
 <svelte:head>
-  {@html generatePageTitleMeta(t('pages.dashboard.ingredients.title'))}
+	{@html generatePageTitleMeta(t('pages.dashboard.ingredients.title'))}
 </svelte:head>
 
 <section class="bg-gray-50 dark:bg-gray-900 my-8">
@@ -271,8 +272,12 @@
 										{convertToTitleCase(ingredient.ingredientName)}
 									</div>
 								</td>
-								<td class="px-4 py-3">{convertToIndonesianDate(ingredient.createdAt, {withTime: true})}</td>
-								<td class="px-4 py-3">{convertToIndonesianDate(ingredient.updateAt, {withTime: true})}</td>
+								<td class="px-4 py-3"
+									>{convertToIndonesianDate(ingredient.createdAt, { withTime: true })}</td
+								>
+								<td class="px-4 py-3"
+									>{convertToIndonesianDate(ingredient.updateAt, { withTime: true })}</td
+								>
 								<td class="px-4 py-3 flex items-center justify-end">
 									<button
 										class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"

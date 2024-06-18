@@ -42,7 +42,7 @@
 	}
 
 	function detailLink(recipe) {
-		return `/dashboard/recipe/browse-recipes/${recipe.recipeSlug}`;
+		return `/browse/recipes/${recipe.recipeSlug}`;
 	}
 
 	$: {

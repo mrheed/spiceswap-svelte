@@ -1,17 +1,10 @@
 <script>
-	import { t } from "@spiceswap/locale/i18n";
-	import { pageStore } from "@spiceswap/stores/pageStore";
-	import { generatePageTitleMeta } from "@spiceswap/utils/common";
-	import { onMount } from "svelte";
-
-  onMount(() => {
-    pageStore.set({
-      scene: 'dashboard'
-    });
-  });
+	import { t } from '@spiceswap/locale/i18n';
+	import { generatePageTitleMeta } from '@spiceswap/utils/common';
 </script>
+
 <svelte:head>
-  {@html generatePageTitleMeta(t('pages.dashboard.title'))}
+	{@html generatePageTitleMeta(t('pages.dashboard.title'))}
 </svelte:head>
 
 <div class="px-4 pt-6">
