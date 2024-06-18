@@ -1,6 +1,4 @@
 <script>
-	import { afterUpdate } from 'svelte';
-
 	export let props;
   export let outerClass = 'w-full h-full';
 	let { src, alt, ...restProps } = props;

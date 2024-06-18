@@ -110,5 +110,6 @@ export function convertToIndonesianDate(dateStr, opts = {}) {
  * @returns {string} - The string in title case.
  */
 export function convertToTitleCase(string) {
+  if (!string) return ''
   return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }

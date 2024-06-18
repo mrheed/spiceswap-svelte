@@ -15,7 +15,6 @@
 	let menu = [
 		{ name: t('common.nav.home'), href: '/', icon: HomeOutline },
 		{ name: t('common.nav.dashboard'), href: '/dashboard', icon: GridOutline },
-		{ name: t('common.nav.recipe'), href: '/dashboard/recipe', icon: BookOpenOutline },
 		{
 			name: t('common.nav.ingredients'),
 			href: '/dashboard/ingredients',

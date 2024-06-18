@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { SCENES, SCENES_FORBIDDEN } from '@spiceswap/common/constant';
 	import AppsMenu from '@spiceswap/lib/widgets/AppsMenu.svelte';
 	import UserMenu from '@spiceswap/lib/widgets/UserMenu.svelte';
 	import { t } from '@spiceswap/locale/i18n';
@@ -33,7 +34,6 @@
 		goto(`/browse/recipes?keyword=${$keyword}`);
 	}
 
-	$: $pageStore.scene;
 </script>
 
 <Navbar
@@ -59,7 +59,7 @@
 		</div>
 		<div class="ms-auto flex items-center text-gray-500 dark:text-gray-400 sm:order-2">
 			{#if $authStore.isAuthenticated}
-				{#if $pageStore.scene !== 'create_recipe'}
+				{#if $pageStore.scene !== SCENES.CREATE_RECIPE && SCENES_FORBIDDEN[$authStore.user.role]?.includes(SCENES.CREATE_RECIPE) === false}
 					<button
 						type="button"
 						on:click={handleCreateRecipe}

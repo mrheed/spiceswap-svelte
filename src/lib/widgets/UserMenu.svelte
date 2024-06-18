@@ -1,13 +1,32 @@
-<script lang="ts">
+<script>
 	import { imagesPath } from '@spiceswap/lib/variables';
 	import { Avatar, Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
 	import { t } from '@spiceswap/locale/i18n';
 	import { authStore } from '@spiceswap/stores/authStore';
+	import { ROLES, ROUTE_TO_SCENE, SCENES_FORBIDDEN } from '@spiceswap/common/constant';
 
-	export let name: string = 'User'; // "Neil Sims",
-	export let avatar: string = ''; // "neil-sims.png",
-	export let email: string = 'user@email.com'; // "neil.sims@flowbite.com",
+	export let name = 'User'; // "Neil Sims",
+	export let avatar = ''; // "neil-sims.png",
+	export let email = 'user@email.com'; // "neil.sims@flowbite.com",
+
+	let menuItems = [
+		{ label: 'common.nav.profile', route: '/profile' },
+		{ label: 'common.nav.my-recipe', route: '/dashboard/recipe/my-recipes' },
+		{ label: 'common.nav.modification-request', route: '/modification-request' },
+		{ label: 'common.nav.bookmark', route: '/bookmark' },
+		{ label: 'common.nav.logout', action: () => authStore.logout() }
+	];
+
+	$: {
+		if (ROLES[$authStore.user.role]) {
+			menuItems = menuItems.filter((item) => {
+				const scene = ROUTE_TO_SCENE[item.route];
+				if (scene === false) return true;
+				return SCENES_FORBIDDEN[$authStore.user.role].includes(scene) === false;
+			});
+		}
+	}
 </script>
 
 <button class="ms-3 rounded-full ring-gray-400 focus:ring-4 dark:ring-gray-600">
@@ -33,35 +52,22 @@
 		<span class="block text-sm">{name}</span>
 		<span class="block text-sm font-light">{email}</span>
 	</DropdownHeader>
-	<DropdownItem
-		on:click={() => goto('/profile')}
-		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
-	>
-		{t('common.nav.profile')}</DropdownItem
-	>
-	<DropdownItem
-		on:click={() => goto('/dashboard/recipe/my-recipes')}
-		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
-	>
-		{t('common.nav.my-recipe')}</DropdownItem
-	>
-	<DropdownItem
-		on:click={() => goto('/modification-request')}
-		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
-	>
-		{t('common.nav.modification-request')}</DropdownItem
-	>
-	<DropdownItem
-		on:click={() => goto('/bookmark')}
-		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
-	>
-		{t('common.nav.bookmark')}</DropdownItem
-	>
-	<DropdownDivider />
-	<DropdownItem
-		on:click={() => authStore.logout()}
-		defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-1000 dark:hover:bg-gray-600 flex gap-2 items-center"
-	>
-		{t('common.nav.logout')}</DropdownItem
-	>
+	{#each menuItems as item}
+		{#if item.label !== 'common.nav.logout'}
+			<DropdownItem
+				on:click={item.action ? item.action : () => goto(item.route)}
+				defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex gap-2 items-center"
+			>
+				{t(item.label)}
+			</DropdownItem>
+		{:else}
+			<DropdownDivider />
+			<DropdownItem
+				on:click={item.action}
+				defaultClass="font-medium py-2 px-4 text-sm hover:bg-gray-1000 dark:hover:bg-gray-600 flex gap-2 items-center"
+			>
+				{t(item.label)}
+			</DropdownItem>
+		{/if}
+	{/each}
 </Dropdown>

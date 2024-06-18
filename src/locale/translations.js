@@ -132,7 +132,19 @@ export default {
     "pages.dashboard.ingredients.edit-ingredient": "Edit Bahan",
     "pages.dashboard.ingredients.edit-ingredient.name": "Nama Bahan",
     "pages.dashboard.ingredients.edit-ingredient.image": "Gambar",
-    "pages.dashboard.ingredients.edit-ingredient.image.format": "Format PNG, JPG, atau JPEG"
+    "pages.dashboard.ingredients.edit-ingredient.image.format": "Format PNG, JPG, atau JPEG",
+    "pages.dashboard.recipe.browse-recipes.detail.changes-history": "Riwayat Perubahan",
+    "pages.dashboard.recipe.browse-recipes.detail.edit": "Edit Resep",
+    "pages.dashboard.recipe.browse-recipes.detail.settings": "Pengaturan",
+    "pages.dashboard.recipe.browse-recipes.detail.type": "Tipe Resep",
+    "pages.dashboard.recipe.browse-recipes.detail.copy": "Salin Resep",
+    "pages.dashboard.recipe.browse-recipes.detail.copy.success": "Resep berhasil disalin",
+    "pages.dashboard.recipe.browse-recipes.detail.copy.error": "Gagal menyalin resep",
+    "pages.dashboard.recipe.browse-recipes.detail.portion": "Porsi untuk {{portion}} orang",
+    "pages.dashboard.recipe.browse-recipes.detail.ingredients": "Bahan-bahan",
+    "pages.dashboard.recipe.browse-recipes.detail.instructions": "Instruksi",
+    "pages.dashboard.recipe.browse-recipes.detail.reviews": "Ulasan",
+    "pages.dashboard.recipe.browse-recipes.detail.step": "Langkah {{step}}",
   },
   en: {
 
