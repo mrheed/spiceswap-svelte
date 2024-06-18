@@ -9,7 +9,9 @@ export const SCENES = {
   LOGIN: 'login',
   REGISTER: 'register',
   CREATE_RECIPE: 'create_recipe',
-  INGREDIENTS: 'ingredients_management'
+  INGREDIENTS: 'ingredients_management',
+  RECIPE: 'recipe_management',
+  USERS: 'user_management'
 }
 
 export const ROUTE_TO_SCENE = {
@@ -18,10 +20,12 @@ export const ROUTE_TO_SCENE = {
   '/login': SCENES.LOGIN,
   '/register': SCENES.REGISTER,
   '/dashboard/recipe/create-recipe': SCENES.CREATE_RECIPE,
-  '/dashboard/ingredients': SCENES.INGREDIENTS
+  '/dashboard/ingredients': SCENES.INGREDIENTS,
+  '/dashboard/recipe': SCENES.RECIPE,
+  '/dashboard/users': SCENES.USERS
 }
 
 export const SCENES_FORBIDDEN = {
   [ROLES.ADMIN]: [],
-  [ROLES.USER]: [SCENES.INGREDIENTS]
+  [ROLES.USER]: [SCENES.INGREDIENTS, SCENES.RECIPE, SCENES.USERS]
 }
