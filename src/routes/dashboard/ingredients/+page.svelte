@@ -179,7 +179,7 @@
 </script>
 
 <svelte:head>
-  {@html generatePageTitleMeta(t('pags.dashboard.ingredients.title'))}
+  {@html generatePageTitleMeta(t('pages.dashboard.ingredients.title'))}
 </svelte:head>
 
 <section class="bg-gray-50 dark:bg-gray-900 my-8">
