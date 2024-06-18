@@ -23,9 +23,6 @@
 	import _ from 'lodash';
 	import ModalDelete from '@spiceswap/components/Modal/ModalDelete.svelte';
 	import Image from '@spiceswap/components/Image.svelte';
-	import { onMount } from 'svelte';
-	import { pageStore } from '@spiceswap/stores/pageStore';
-	import { SCENES } from '@spiceswap/common/constant';
 
 	const toggleFetch = writable(false);
 	const keyword = writable('');
@@ -176,7 +173,7 @@
 
 	const debounceFetchDataIngredients = _.debounce(getDataIngredients, 500);
 
-	$: $toggleFetch || (pageStore.isCurrentScene(SCENES.INGREDIENTS) && debounceFetchDataIngredients($pageNumber, $keyword));
+	$: $toggleFetch || debounceFetchDataIngredients($pageNumber, $keyword);
 </script>
 
 <svelte:head>

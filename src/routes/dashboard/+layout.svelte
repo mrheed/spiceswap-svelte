@@ -12,8 +12,8 @@
 
 	// Store to manage the loaded state of the page
 	const loaded = writable(false);
-	// Store to manage if the current scene is forbidden for the user
-	const isForbidden = writable(false);
+
+  const isForbidden = writable(false)
 
 	// Set the current scene based on the route
 	$: pageStore.setScene(ROUTE_TO_SCENE[$page.route.id]);

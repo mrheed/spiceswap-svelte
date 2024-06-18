@@ -67,6 +67,7 @@ function createAuth() {
     logout,
     login,
     refreshPage,
+    fetchUserData,
     setAuth: (value) => set({ ...state, isAuthenticated: value }),
   };
 }

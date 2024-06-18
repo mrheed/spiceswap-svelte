@@ -26,6 +26,7 @@
 				localStorage.setItem('accessToken', data.results.accessToken);
 				localStorage.setItem('refreshToken', data.results.refreshToken);
 				authStore.login();
+				await authStore.fetchUserData()
 				goto('/dashboard');
 			} else {
 				alertState.message = t('pages.login.error', { error: generateMessageFromResponse(data) });

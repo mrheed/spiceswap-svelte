@@ -1,22 +1,10 @@
 import { writable } from "svelte/store";
 
-export const pageForbiddenStore = () => {
-  const state = {
-    isForbidden: true
-  }
-  const { subscribe, set } = writable(true)
-  const isForbidden = () => state.isForbidden
-  return {
-    subscribe,
-    set,
-    isForbidden
-  }
-}
-
 const createPageStore = () => {
   const state = {
     scene: 'home',
     previousScene: '',
+    isForbidden: true
   }
 
   const { subscribe, update, set } = writable(state);
@@ -29,12 +17,22 @@ const createPageStore = () => {
     return state.scene === scene
   }
 
+  const isAllowedToRequest = (scene) => {
+    return state.isForbidden && isCurrentScene(scene)
+  }
+
+  const setForbidden = (forbidden) => {
+    update(state => ({ ...state, isForbidden: forbidden }));
+  }
+
   return {
     subscribe,
     set,
     update,
     setScene,
     isCurrentScene,
+    setForbidden,
+    isAllowedToRequest
   }
 }
 

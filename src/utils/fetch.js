@@ -33,5 +33,8 @@ export function generateMessageFromResponse(response) {
   if (response.errors && response.errors.length > 0) {
     return response.errors.map(error => `${error.field} ${error.errorMessage}`).join('<br> ');
   }
+  if (response.error) {
+    return `${response.status} ${response.error}`
+  }
   return response.message || 'An unknown error occurred';
 }
