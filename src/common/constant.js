@@ -8,10 +8,11 @@ export const SCENES = {
   DASHBOARD: 'dashboard',
   LOGIN: 'login',
   REGISTER: 'register',
+  RECIPE: 'recipe_management',
   CREATE_RECIPE: 'create_recipe',
   MY_RECIPE: 'my_recipe',
+  DETAIL_RECIPE: 'detail_recipe',
   INGREDIENTS: 'ingredients_management',
-  RECIPE: 'recipe_management',
   USERS: 'user_management'
 }
 
@@ -30,4 +31,9 @@ export const ROUTE_TO_SCENE = {
 export const SCENES_FORBIDDEN = {
   [ROLES.ADMIN]: [SCENES.MY_RECIPE, SCENES.CREATE_RECIPE],
   [ROLES.USER]: [SCENES.INGREDIENTS, SCENES.RECIPE, SCENES.USERS]
+}
+
+export const RECIPE_TYPE = {
+  ORIGINAL: 'ORIGINAL',
+  COPY: 'COPY'
 }

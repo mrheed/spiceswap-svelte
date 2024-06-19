@@ -61,10 +61,55 @@ export const bookmarkRecipe = async (recipeSlug) => {
   }
 }
 
+export const unbookmarkRecipe = async (recipeSlug) => {
+  try {
+    const response = await fetchV1Authorized(`recipe/bookmark/${recipeSlug}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export const getBrowseRecipeDetail = async (recipeSlug) => {
   try {
     const response = await fetchV1Authorized(`browse-recipe/recipe-detail/${recipeSlug}`, {
       method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const getMyRecipeDetail = async (recipeSlug) => {
+  try {
+    const response = await fetchV1Authorized(`recipe/get-my-recipe-detail/${recipeSlug}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const copyRecipe = async (recipeSlug) => {
+  try {
+    const response = await fetchV1Authorized(`recipe/copy-recipe/${recipeSlug}`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       }

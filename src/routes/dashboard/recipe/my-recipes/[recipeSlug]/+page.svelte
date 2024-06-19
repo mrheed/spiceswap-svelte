@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import { copyRecipe, getBrowseRecipeDetail } from '@spiceswap/api/recipe';
+	import { getMyRecipeDetail } from '@spiceswap/api/recipe';
 	import RecipeDetail from '@spiceswap/components/Recipe/RecipeDetail.svelte';
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
@@ -19,7 +19,7 @@
 	});
 
 	const fetchRecipeDetail = async () => {
-		const response = await getBrowseRecipeDetail(recipeSlug);
+		const response = await getMyRecipeDetail(recipeSlug);
 		const data = await response.json();
 		if (response.ok) {
 			recipe.set(data.results);
@@ -32,24 +32,6 @@
 		}
 		loadingRecipe.set(false);
 	};
-
-	const fetchCopyRecipe = async (recipeSlug) => {
-		const response = await copyRecipe(recipeSlug);
-		const data = await response.json();
-		if (response.ok) {
-			showToast(
-				t('pages.dashboard.recipe.detail.copy-success'),
-				generateMessageFromResponse(data),
-				'success'
-			);
-		} else {
-			showToast(
-				t('pages.dashboard.recipe.detail.copy-error'),
-				generateMessageFromResponse(data),
-				'error'
-			);
-		}
-	};
 </script>
 
 <svelte:head>
@@ -57,7 +39,7 @@
 </svelte:head>
 
 {#if !$loadingRecipe}
-	<RecipeDetail recipe={$recipe} methods={{ fetchCopyRecipe }} />
+	<RecipeDetail recipe={$recipe} />
 {:else}
 	<div class="w-full h-full flex justify-center items-center mt-16">
 		<Spinner />
