@@ -57,13 +57,13 @@
 		</div>
 		<div class="flex items-center gap-2 mt-8">
 			<span class="text-title text-3xl">{convertToTitleCase(recipe.recipeName)}</span>
-			<span class="text-sm italic"
-				>{t('pages.dashboard.recipe.detail.portion', {
-					portion: recipe.portion
-				})}</span
-			>
 		</div>
-		<p class="mt-4 flex gap-4 items-center text-sm"><Avatar size="sm" />{recipe.owner}</p>
+		<span class="text-sm italic block mt-2"
+			>{t('pages.dashboard.recipe.detail.portion', {
+				portion: recipe.portion
+			})}</span
+		>
+		<p class="mt-4 flex gap-2 items-center text-sm"><Avatar size="sm" class="h-4 w-4" />{recipe.owner}</p>
 		<p class="mt-8">{recipe.about}</p>
 		<div class="mt-8 flex justify-between">
 			<span class="font-semibold text-sm flex gap-1 items-center">
@@ -135,11 +135,13 @@
 		>
 		{#if $isAuthenticated}
 			<Button class="flex gap-4 justify-start"
+        on:click={() => goto(`/dashboard/recipe/update/${recipe.recipeSlug}`)}
 				><EditOutline /> {t('pages.dashboard.recipe.detail.edit')}</Button
 			>
 		{/if}
 		{#if $isAuthenticated}
 			<Button class="flex gap-4 justify-start" color="alternative"
+        on:click={() => goto(`/dashboard/recipe/settings/${recipe.recipeSlug}`)}
 				><CogOutline />{t('pages.dashboard.recipe.detail.settings')}</Button
 			>
 		{/if}

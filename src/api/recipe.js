@@ -120,3 +120,65 @@ export const copyRecipe = async (recipeSlug) => {
     throw error
   }
 }
+
+export const getUpdateRecipeData = async (recipeSlug) => {
+  try {
+    const response = await fetchV1Authorized(`recipe/update-recipe/${recipeSlug}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const getSettingsRecipeData = async (recipeSlug) => {
+  try {
+    const response = await fetchV1Authorized(`recipe/set-recipe/${recipeSlug}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const updateSettingsRecipeData = async (recipeSlug, data) => {
+  try {
+    const response = await fetchV1Authorized(`recipe/set-recipe/${recipeSlug}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const updateDetailRecipeData = async (recipeSlug, data) => {
+  try {
+    const response = await fetchV1Authorized(`recipe/update-recipe/${recipeSlug}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}

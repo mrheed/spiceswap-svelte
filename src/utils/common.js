@@ -113,3 +113,7 @@ export function convertToTitleCase(string) {
   if (!string) return ''
   return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
+
+export function gotoPublicDetailRecipe(recipeSlug) {
+  goto(`/browse/recipes/${recipeSlug}`);
+}
