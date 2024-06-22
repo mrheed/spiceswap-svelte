@@ -21,19 +21,6 @@
 	const ingredients = writable([]);
 	const steps = writable([]);
 
-	const addStepsModalOpen = writable(false);
-	const addIngredientsModalOpen = writable(false);
-
-	const ingredientDetails = writable({
-		id: '',
-		name: '',
-		amount: '',
-		unit: ''
-	});
-	const stepDetails = writable({
-		description: ''
-	});
-
 	onMount(() => {
 		pageStore.setScene(SCENES.CREATE_RECIPE);
 	});
@@ -47,13 +34,10 @@
 	}
 
 	function handleAddIngredient(event) {
-		ingredients.set([...$ingredients, { ...$ingredientDetails, id: Date.now() }]);
-		addIngredientsModalOpen.set(false);
-		ingredientDetails.set({
-			name: '',
-			amount: 0,
-			unit: ''
-		});
+		ingredients.update((ingredients) => [
+			...ingredients,
+			{ name: '', amount: '', ingredientDetailSlug: '' }
+		]);
 	}
 
 	function handleDeleteIngredient(ingredient) {
@@ -65,11 +49,7 @@
 	}
 
 	function handleAddStep() {
-		steps.set([...$steps, { ...$stepDetails, id: Date.now() }]);
-		addStepsModalOpen.set(false);
-		stepDetails.set({
-			description: ''
-		});
+		steps.update((steps) => [...steps, { description: '' }]);
 	}
 
 	async function handleSaveRecipe() {
@@ -81,7 +61,7 @@
 			visibility: $visibility,
 			ingredientDetailRequests: $ingredients.map((ingredient) => ({
 				ingredientName: ingredient.name,
-				dose: `${ingredient.amount} ${ingredient.unit}`
+				dose: ingredient.amount
 			})),
 			stepRequests: $steps.map((step) => ({
 				stepDescription: step.description
@@ -108,7 +88,7 @@
 	{@html generatePageTitleMeta(t('pages.dashboard.recipe.create.title'))}
 </svelte:head>
 
-<div class="px-40 mt-8">
+<div class="px-32 mt-8">
 	<h1 class="text-4xl font-bold">{t('pages.dashboard.recipe.create.title')}</h1>
 	<div class="px-8 py-4 mt-8 bg-white rounded-lg">
 		<div class="bg-white">
@@ -190,84 +170,116 @@
 		</div>
 		<hr class="border-t border-gray-200 my-8" />
 		<div class="mt-4">
-			<h2 class="font-bold text-lg">{t('pages.dashboard.recipe.create.detail.title')}</h2>
+			<h2 class="font-bold text-lg px-6">{t('pages.dashboard.recipe.create.detail.title')}</h2>
 			<div class="grid grid-cols-2 gap-x-16 gap-y-8 mt-4">
-				<div class="flex flex-col gap-1">
+				<div class="flex flex-col gap-1 px-6">
 					<Label>{t('pages.dashboard.recipe.create.detail.portion')}</Label>
-					<Input bind:value={$portion} on:input={(e) => handleInputChange(e, portion)} />
+					<Input bind:value={$portion} on:input={(e) => handleInputChange(e, portion)} class="w-1/2"/>
 				</div>
 				<div></div>
 				<div class="flex flex-col gap-1">
-					<Label>{t('pages.dashboard.recipe.create.ingredients.title')}</Label>
 					<div class="w-full">
 						{#if $ingredients.length > 0}
 							<div class="w-full mt-2 text-sm text-left text-gray-500 dark:text-gray-400">
-								<div class="mb-2 flex gap-2 text-sm text-gray-700 dark:text-gray-400">
-									<div class="w-1/3">{t('pages.dashboard.recipe.create.ingredients.add.name')}</div>
-									<div class="w-1/3">
-										{t('pages.dashboard.recipe.create.ingredients.add.amount')}
-									</div>
-								</div>
-								{#each $ingredients as ingredient}
-									<div class="flex gap-2 rounded-lg mb-2">
-										<div class="flex py-2 px-4 w-1/3 rounded-lg bg-gray-100 dark:bg-gray-700">
-											{ingredient.name}
-										</div>
-										<div class="flex py-2 px-4 w-1/3 rounded-lg bg-gray-100 dark:bg-gray-700">
-											{ingredient.amount}
-											{ingredient.unit}
-										</div>
-										<div class="px-4 w-1/3">
-											<Button
-												class="px-3 py-2 text-xs rounded-md text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
-												on:click={() => handleDeleteIngredient(ingredient)}
+								<table
+									class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+								>
+									<thead
+										class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+									>
+										<tr>
+											<th class="px-6 py-3"
+												>{t('pages.dashboard.recipe.create.ingredients.add.name')}</th
 											>
-												<TrashBinOutline />
-											</Button>
-										</div>
-									</div>
-								{/each}
+											<th class="px-6 py-3"
+												>{t('pages.dashboard.recipe.create.ingredients.add.amount')}</th
+											>
+											<th class="px-6 py-3" width="1%"
+												>{t('pages.dashboard.recipe.create.ingredients.add.actions')}</th
+											>
+										</tr>
+									</thead>
+									{#each $ingredients as ingredient}
+										<tr>
+											<td class="px-6 py-3">
+												<Input
+													bind:value={ingredient.name}
+												/>
+											</td>
+											<td class="px-6 py-3">
+												<Input
+													bind:value={ingredient.amount}
+												/>
+											</td>
+											<td class="px-6 py-3">
+												<Button
+													class="p-2 text-xs rounded-md text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-9000"
+													on:click={() => handleDeleteIngredient(ingredient)}
+												>
+													<TrashBinOutline size="sm" />
+												</Button>
+											</td>
+										</tr>
+									{/each}
+								</table>
 							</div>
 						{/if}
 						<Button
-							class="mt-4 flex gap-2 text-sm px-4"
-							on:click={() => addIngredientsModalOpen.set(true)}
+							class="mt-4 flex gap-2 text-sm px-3 mx-6"
+							size="sm"
+							on:click={handleAddIngredient}
 						>
-							<PlusOutline />
+							<PlusOutline size="sm" />
 							{t('pages.dashboard.recipe.create.ingredients.add')}</Button
 						>
 					</div>
 				</div>
 				<div class="flex flex-col gap-1">
-					<Label>{t('pages.dashboard.recipe.create.steps.title')}</Label>
 					<div class="w-full">
 						{#if $steps.length > 0}
 							<div class="w-full mt-2 text-sm text-left text-gray-500 dark:text-gray-400">
-								{#each $steps as step, index}
-									<Label class="mb-1"
-										>{t('pages.dashboard.recipe.create.steps.step', { step: index + 1 })}</Label
+								<table
+									class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+								>
+									<thead
+										class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
 									>
-									<div class="flex rounded-lg mb-2">
-										<div class="flex py-2 px-4 w-2/3 rounded-lg bg-gray-100 dark:bg-gray-700">
-											{step.description}
-										</div>
-										<div class="px-4 w-1/3">
-											<Button
-												class="px-3 py-2 text-xs rounded-md text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
-												on:click={() => handleDeleteStep(index)}
-											>
-												<TrashBinOutline />
-											</Button>
-										</div>
-									</div>
-								{/each}
+										<tr>
+											<th class="px-6 py-3">{t('pages.dashboard.recipe.create.steps.title')}</th>
+											<th class="px-6 py-3" width="1%">{t('pages.dashboard.recipe.create.steps.actions')}</th>
+										</tr>
+									</thead>
+									{#each $steps as step, index}
+										<tr>
+											<td class="px-6 py-3 flex flex-col gap-2">
+												<Label class="font-bold"
+													>{t('pages.dashboard.recipe.create.steps.step', {
+														step: index + 1
+													})}</Label
+												>
+												<Textarea
+													bind:value={step.description}
+												/>
+											</td>
+											<td class="px-6 py-3">
+												<Button
+													class="p-2 text-xs rounded-md text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-9000"
+													on:click={() => handleDeleteStep(index)}
+												>
+													<TrashBinOutline size="sm" />
+												</Button>
+											</td>
+										</tr>
+									{/each}
+								</table>
 							</div>
 						{/if}
 						<Button
-							class="mt-4 flex gap-2 text-sm px-4"
-							on:click={() => addStepsModalOpen.set(true)}
+							class="mt-4 flex gap-2 text-sm px-3 mx-6"
+							size="sm"
+							on:click={handleAddStep}
 						>
-							<PlusOutline />
+							<PlusOutline size="sm" />
 							{t('pages.dashboard.recipe.create.steps.add')}</Button
 						>
 					</div>
@@ -277,69 +289,10 @@
 
 		<hr class="border-t border-gray-200 my-8" />
 
-		<Button class="mt-4 flex gap-2 text-sm px-4" on:click={handleSaveRecipe}>
+		<Button class="mt-4 flex gap-2 text-sm px-4 mx-6" on:click={handleSaveRecipe}>
 			<FloppyDiskOutline />
 			{t('pages.dashboard.recipe.create.save')}</Button
 		>
 	</div>
 </div>
 <!-- End of Selection -->
-
-<Modal
-	title={t('pages.dashboard.recipe.create.ingredients.add')}
-	size="sm"
-	bind:open={$addIngredientsModalOpen}
-	on:close={() => addIngredientsModalOpen.set(false)}
->
-	<div class="flex flex-col gap-4">
-		<div class="flex flex-col gap-2">
-			<Label>{t('pages.dashboard.recipe.create.ingredients.add.name')}</Label>
-			<Input
-				bind:value={$ingredientDetails.name}
-				on:input={(e) => handleInputChange(e, ingredientDetails, 'name')}
-			/>
-		</div>
-		<div class="flex gap-2">
-			<div class="flex flex-col gap-2">
-				<Label>{t('pages.dashboard.recipe.create.ingredients.add.amount')}</Label>
-				<Input
-					bind:value={$ingredientDetails.amount}
-					on:input={(e) => handleInputChange(e, ingredientDetails, 'amount')}
-					type="number"
-				/>
-			</div>
-			<div class="flex flex-col gap-2 w-full">
-				<Label>{t('pages.dashboard.recipe.create.ingredients.add.unit')}</Label>
-				<Input
-					bind:value={$ingredientDetails.unit}
-					on:input={(e) => handleInputChange(e, ingredientDetails, 'unit')}
-				/>
-			</div>
-		</div>
-		<Button class="mt-4 flex gap-2 text-sm px-4" on:click={handleAddIngredient}>
-			<FloppyDiskOutline />
-			{t('pages.dashboard.recipe.create.ingredients.add')}</Button
-		>
-	</div>
-</Modal>
-
-<Modal
-	title={t('pages.dashboard.recipe.create.steps.add')}
-	size="sm"
-	bind:open={$addStepsModalOpen}
-	on:close={() => addStepsModalOpen.set(false)}
->
-	<div class="flex flex-col gap-4">
-		<div class="flex flex-col gap-2">
-			<Label>{t('pages.dashboard.recipe.create.steps.description')}</Label>
-			<Textarea
-				bind:value={$stepDetails.description}
-				on:input={(e) => handleInputChange(e, stepDetails, 'description')}
-			/>
-		</div>
-		<Button class="mt-4 flex gap-2 text-sm px-4" on:click={handleAddStep}>
-			<FloppyDiskOutline />
-			{t('pages.dashboard.recipe.create.steps.add')}</Button
-		>
-	</div>
-</Modal>

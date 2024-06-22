@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import {
 		getSettingsRecipeData,
-		getUpdateRecipeData,
 		updateSettingsRecipeData
 	} from '@spiceswap/api/recipe';
 	import Dropzone from '@spiceswap/components/Dropzone.svelte';
@@ -11,9 +10,8 @@
 	import {
 		fileToBase64,
 		generatePageTitleMeta,
-		gotoPublicDetailRecipe,
+		goToPrivateDetailRecipe,
 		showToast,
-		urlToFile
 	} from '@spiceswap/utils/common';
 	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import { Button, Input, Label, Spinner, Textarea } from 'flowbite-svelte';
@@ -61,7 +59,7 @@
 				recipeName: $name,
 				about: $description,
 				visibility: $visibility,
-				thumbnail: fileToBase64($thumbnail)
+				thumbnailImage: await fileToBase64($thumbnail)
 			};
 			const response = await updateSettingsRecipeData(recipeSlug, putData);
 			const data = await response.json();
@@ -71,6 +69,7 @@
 					t('pages.dashboard.recipe.settings.update.success'),
 					'success'
 				);
+				goToPrivateDetailRecipe(recipeSlug);
 			} else {
 				showToast(
 					t('pages.dashboard.recipe.settings.update.error'),
@@ -84,6 +83,8 @@
 	onMount(async () => {
 		await loadingStore.wrapFn(fetchSettingsRecipeData);
 	});
+
+  $: console.log($thumbnail)
 </script>
 
 <svelte:head>

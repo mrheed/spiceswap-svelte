@@ -26,6 +26,7 @@
 
 	const isOriginal = writable(true);
 	const isAuthenticated = writable(false);
+  const isOwner = writable(false);
 
 	onMount(() => {
 		isOriginal.set(recipe.recipeType === RECIPE_TYPE.ORIGINAL);
@@ -35,6 +36,7 @@
 		await loadingStore.wrapFn(async () => await methods.fetchCopyRecipe(recipe.recipeSlug));
 
 	$: isAuthenticated.set($authStore.isAuthenticated);
+  $: isOwner.set(recipe.owner === $authStore.user.username);
 </script>
 
 <svelte:head>
@@ -122,7 +124,7 @@
 		</div>
 	</div>
 	<div class="w-1/4 text-right flex flex-col gap-2">
-		{#if $isAuthenticated}
+		{#if $isAuthenticated && !$isOwner}
 			<Bookmark
 				{recipe}
 				buttonClass="flex items-center gap-4 justify-start px-4 py-2 text-sm text-yellow-400 border border-yellow-400 dark:border-yellow-300 dark:text-yellow-300 rounded-lg"
@@ -133,13 +135,13 @@
 		<Button class="flex gap-4 justify-start" color="yellow"
 			><ClockOutline />{t('pages.dashboard.recipe.detail.changes-history')}</Button
 		>
-		{#if $isAuthenticated}
+		{#if $isAuthenticated && $isOwner}
 			<Button class="flex gap-4 justify-start"
         on:click={() => goto(`/dashboard/recipe/update/${recipe.recipeSlug}`)}
 				><EditOutline /> {t('pages.dashboard.recipe.detail.edit')}</Button
 			>
 		{/if}
-		{#if $isAuthenticated}
+		{#if $isAuthenticated && $isOwner}
 			<Button class="flex gap-4 justify-start" color="alternative"
         on:click={() => goto(`/dashboard/recipe/settings/${recipe.recipeSlug}`)}
 				><CogOutline />{t('pages.dashboard.recipe.detail.settings')}</Button

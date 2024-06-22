@@ -1,3 +1,4 @@
+import { goto } from "$app/navigation";
 import { toasts } from "svelte-toasts";
 
 /**
@@ -114,6 +115,6 @@ export function convertToTitleCase(string) {
   return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
-export function gotoPublicDetailRecipe(recipeSlug) {
-  goto(`/browse/recipes/${recipeSlug}`);
+export function goToPrivateDetailRecipe(recipeSlug) {
+  goto(`/dashboard/recipe/my-recipes/${recipeSlug}`);
 }
