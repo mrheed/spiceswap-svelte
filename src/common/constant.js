@@ -37,3 +37,8 @@ export const RECIPE_TYPE = {
   ORIGINAL: 'ORIGINAL',
   COPY: 'COPY'
 }
+
+export const MODIFICATION_REQUEST_TYPE = {
+  IN: 'IN',
+  OUT: 'OUT'
+}

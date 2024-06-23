@@ -1,9 +1,12 @@
 <script>
+	import { twMerge } from "tailwind-merge";
+
 	export let type = 'info'; // default type
 	export let message = '';
 	export let dismissible = true;
+  export let alertClass = ''
 
-	let dismissed = true; 
+	export let dismissed = true; 
 
 	const types = {
 		info: {
@@ -58,7 +61,7 @@
 
 {#if !dismissed}
 	<div
-		class={`flex items-center p-4 mb-4 ${alertType.textColor} rounded-lg ${alertType.bgColor} dark:bg-gray-800 ${alertType.iconColor}`}
+		class={twMerge(`flex items-center p-4 mb-4 ${alertType.textColor} rounded-lg ${alertType.bgColor} dark:bg-gray-800 ${alertType.iconColor}`, alertClass)}
 		role="alert"
 	>
 		<svg
@@ -74,7 +77,11 @@
 		</svg>
 		<span class="sr-only">Info</span>
 		<div class="ms-3 text-sm font-medium">
-			{@html message}
+      {#if message}
+        {@html message}
+      {:else}
+        <slot />
+      {/if}
 		</div>
 		{#if dismissible}
 			<button

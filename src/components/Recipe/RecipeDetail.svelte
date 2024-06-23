@@ -18,6 +18,8 @@
 	import { writable } from 'svelte/store';
 	import Bookmark from './Bookmark.svelte';
 	import { authStore } from '@spiceswap/stores/authStore';
+	import Sticksy from 'sticksy';
+	import { browser } from '$app/environment';
 
 	export let methods = {
 		fetchCopyRecipe: async () => {}
@@ -26,17 +28,27 @@
 
 	const isOriginal = writable(true);
 	const isAuthenticated = writable(false);
-  const isOwner = writable(false);
+	const isOwner = writable(false);
+	let stick = null;
 
 	onMount(() => {
 		isOriginal.set(recipe.recipeType === RECIPE_TYPE.ORIGINAL);
+		console.log(Sticksy);
 	});
 
 	const _fetchCopyRecipe = async () =>
 		await loadingStore.wrapFn(async () => await methods.fetchCopyRecipe(recipe.recipeSlug));
 
 	$: isAuthenticated.set($authStore.isAuthenticated);
-  $: isOwner.set(recipe.owner === $authStore.user.username);
+	$: isOwner.set(recipe.owner === $authStore.user.username);
+	$: if (browser && stick) {
+		const stickyEl = new window.Sticksy('.stick', {
+			topSpacing: 85
+		});
+		stickyEl.onStateChanged = (state) => {
+			stickyEl.nodeRef.classList.toggle('widget--sticky', state === 'fixed');
+		};
+	}
 </script>
 
 <svelte:head>
@@ -46,7 +58,7 @@
 <div class="px-16 mt-8">
 	<h1 class="font-bold">{t('pages.dashboard.recipe.detail.title')}</h1>
 </div>
-<div class="px-16 py-8 flex gap-8 mt-8 bg-white rounded-lg shadow-2xl overflow-hidden">
+<div class="px-16 py-8 flex gap-16 mt-8 bg-white rounded-lg shadow overflow-hidden">
 	<div class="w-3/4">
 		<div style="height: 500px;" class="-mt-8 -ms-16">
 			<Image
@@ -65,7 +77,9 @@
 				portion: recipe.portion
 			})}</span
 		>
-		<p class="mt-4 flex gap-2 items-center text-sm"><Avatar size="sm" class="h-4 w-4" />{recipe.owner}</p>
+		<p class="mt-4 flex gap-2 items-center text-sm">
+			<Avatar size="sm" class="h-4 w-4" />{recipe.owner}
+		</p>
 		<p class="mt-8">{recipe.about}</p>
 		<div class="mt-8 flex justify-between">
 			<span class="font-semibold text-sm flex gap-1 items-center">
@@ -77,7 +91,7 @@
 				{/if}
 			</span>
 			{#if $isOriginal}
-				{#if $isAuthenticated}
+				{#if $isAuthenticated && $isOwner === false}
 					<Button color="none" class="flex gap-2" on:click={_fetchCopyRecipe}>
 						<FileCopyOutline />
 						{t('pages.dashboard.recipe.detail.copy')}
@@ -99,7 +113,7 @@
 				</h3>
 				<ul>
 					{#each recipe.ingredientDetailResponses as ingredient}
-						<li class="text-sm">- {ingredient.dose} {ingredient.ingredientName}</li>
+						<li class="text-sm my-1">- {ingredient.dose} {ingredient.ingredientName}</li>
 					{/each}
 				</ul>
 			</div>
@@ -107,15 +121,14 @@
 				<h3 class="text-2xl font-bold mb-2">
 					{t('pages.dashboard.recipe.detail.instructions')}
 				</h3>
-				<ul class="list-disc">
+				<ul>
 					{#each recipe.stepDetailResponses as instruction}
-						<li class="text-sm">
-							<span class="font-bold">
+						<li class="text-sm my-1">
+							<span class="font-semibold">
 								{t('pages.dashboard.recipe.detail.step', {
 									step: instruction.numberStep
-								})}
+								})},
 							</span>
-							<br />
 							{instruction.stepDescription}
 						</li>
 					{/each}
@@ -123,29 +136,34 @@
 			</div>
 		</div>
 	</div>
-	<div class="w-1/4 text-right flex flex-col gap-2">
-		{#if $isAuthenticated && !$isOwner}
-			<Bookmark
-				{recipe}
-				buttonClass="flex items-center gap-4 justify-start px-4 py-2 text-sm text-yellow-400 border border-yellow-400 dark:border-yellow-300 dark:text-yellow-300 rounded-lg"
+	<div class="w-1/4">
+		<div class=" flex flex-col gap-2 stick" bind:this={stick}>
+			{#if $isAuthenticated && !$isOwner}
+				<Bookmark
+					{recipe}
+					buttonClass="flex items-center gap-4 justify-start px-4 py-2 text-sm text-yellow-400 border border-yellow-400 dark:border-yellow-300 dark:text-yellow-300 rounded-lg"
+				>
+					{t('pages.dashboard.recipe.detail.bookmark')}
+				</Bookmark>
+			{/if}
+			<Button class="flex gap-4 justify-start" color="yellow"
+				><ClockOutline />{t('pages.dashboard.recipe.detail.changes-history')}</Button
 			>
-				{t('pages.dashboard.recipe.detail.bookmark')}
-			</Bookmark>
-		{/if}
-		<Button class="flex gap-4 justify-start" color="yellow"
-			><ClockOutline />{t('pages.dashboard.recipe.detail.changes-history')}</Button
-		>
-		{#if $isAuthenticated && $isOwner}
-			<Button class="flex gap-4 justify-start"
-        on:click={() => goto(`/dashboard/recipe/update/${recipe.recipeSlug}`)}
-				><EditOutline /> {t('pages.dashboard.recipe.detail.edit')}</Button
-			>
-		{/if}
-		{#if $isAuthenticated && $isOwner}
-			<Button class="flex gap-4 justify-start" color="alternative"
-        on:click={() => goto(`/dashboard/recipe/settings/${recipe.recipeSlug}`)}
-				><CogOutline />{t('pages.dashboard.recipe.detail.settings')}</Button
-			>
-		{/if}
+			{#if $isAuthenticated && $isOwner}
+				<Button
+					class="flex gap-4 justify-start"
+					on:click={() => goto(`/dashboard/recipe/update/${recipe.recipeSlug}`)}
+					><EditOutline /> {t('pages.dashboard.recipe.detail.edit')}</Button
+				>
+			{/if}
+			{#if $isAuthenticated && $isOwner}
+				<Button
+					class="flex gap-4 justify-start"
+					color="alternative"
+					on:click={() => goto(`/dashboard/recipe/settings/${recipe.recipeSlug}`)}
+					><CogOutline />{t('pages.dashboard.recipe.detail.settings')}</Button
+				>
+			{/if}
+		</div>
 	</div>
 </div>

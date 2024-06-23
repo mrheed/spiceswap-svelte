@@ -2,6 +2,7 @@ export default {
   id: {
     "common.error": "Oops, ada yang salah!",
     "common.review": "Tinjau",
+    "common.no-data": "Tidak ada data",
     "common.nav.search": "Cari Resep atau Bahan Favorit Anda",
     "common.nav.home": "Beranda",
     "common.nav.dashboard": "Dasbor",
@@ -150,6 +151,7 @@ export default {
     "pages.dashboard.recipe.detail.step": "Langkah {{step}}",
     "pages.dashboard.recipe.detail.visibility": "Visibilitas: {{visibility}}",
     "pages.dashboard.recipe.detail.bookmark": "Bookmark",
+    "pages.dashboard.recipe.detail.button-group": "Tindakan",
     "pages.dashboard.recipe.settings.information.name": "Nama Resep",
     "pages.dashboard.recipe.settings.information.description": "Deskripsi",
     "pages.dashboard.recipe.settings.information.visibility": "Visibilitas",
@@ -179,6 +181,22 @@ export default {
     "pages.dashboard.recipe.update.steps.actions": "Actions",
     "pages.dashboard.recipe.update.successTitle": "Success",
     "pages.dashboard.recipe.update.errorTitle": "Error",
+    "pages.dashboard.modification-request.title": "Modification Request",
+    "pages.dashboard.modification-request.create": "Create Modification Request",
+    "pages.dashboard.modification-request.in": "Permintaan Masuk",
+    "pages.dashboard.modification-request.out": "Permintaan Keluar",
+    "pages.dashboard.modification-request.create.title": "Create Modification Request",
+    "pages.dashboard.modification-request.create.button-select": "Select Recipe",
+    "pages.dashboard.modification-request.create.original-owner": "Original Owner",
+    "pages.dashboard.modification-request.create.original-recipe": "Original Recipe",
+    "pages.dashboard.modification-request.create.send-message": "Send Message",
+    "pages.dashboard.modification-request.create.send-button": "Send",
+    "pages.dashboard.modification-request.create.message-placeholder": "Message",
+    "pages.dashboard.modification-request.create.message-title": "Mengirim permintaan ke {{requestTo}}",
+    "pages.dashboard.modification-request.create.message-title-description": "Dari \"{{fromRecipeName}}\" ke \"{{toRecipeName}}\"",
+    "pages.dashboard.modification-request.create.success-title": "Berhasil mengirim permintaan",
+    "pages.dashboard.modification-request.create.error-title": "Gagal mengirim permintaan",
+    "pages.dashboard.modification-request.error": "Gagal mengambil permintaan"
   },
   en: {
 

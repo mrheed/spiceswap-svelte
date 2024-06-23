@@ -8,6 +8,7 @@
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
 	import {
+	convertToTitleCase,
 		fileToBase64,
 		generatePageTitleMeta,
 		goToPrivateDetailRecipe,
@@ -26,6 +27,7 @@
 	const description = writable('');
 	const visibility = writable('');
 	const thumbnail = writable('');
+  const recipeName = writable('');
 
 	const fetchSettingsRecipeData = async () => {
 		const response = await getSettingsRecipeData(recipeSlug);
@@ -35,6 +37,7 @@
 			description.set(data.results.about);
 			visibility.set(data.results.visibility);
 			thumbnail.set(data.results.thumbnailImageLink);
+      recipeName.set(data.results.recipeName);
 		} else {
 			showToast(
 				t('pages.dashboard.recipe.settings.errorTitle'),
@@ -96,6 +99,8 @@
 		<h1 class="font-bold">{t('pages.dashboard.recipe.settings.title')}</h1>
 
 		<div class="mt-8 pt-8 px-8 bg-white rounded-lg py-8 shadow">
+      <h2 class="text-xl font-bold mb-8">{convertToTitleCase($recipeName)}</h2>
+      <hr class="border-t border-gray-200 my-8" />
 			<div class="grid grid-cols-2 gap-16">
 				<div class="flex flex-col gap-4">
 					<div class="flex flex-col gap-1">

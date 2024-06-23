@@ -3,7 +3,7 @@
 	import { getUpdateRecipeData, updateDetailRecipeData } from '@spiceswap/api/recipe';
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
-	import { generatePageTitleMeta, goToPrivateDetailRecipe, showToast } from '@spiceswap/utils/common';
+	import { convertToTitleCase, generatePageTitleMeta, goToPrivateDetailRecipe, showToast } from '@spiceswap/utils/common';
 	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import { Modal, Button, Input, Label, Spinner, Textarea } from 'flowbite-svelte';
 	import { FloppyDiskOutline, PlusOutline, TrashBinOutline } from 'flowbite-svelte-icons';
@@ -15,6 +15,7 @@
 	const ingredients = writable([]);
 	const steps = writable([]);
 	const portion = writable(0);
+  const recipeName = writable('')
 
 	const fetchUpdateRecipeData = async () => {
 		const response = await getUpdateRecipeData(recipeSlug);
@@ -27,6 +28,7 @@
 					ingredientDetailSlug: ingredient.ingredientDetailSlug
 				})
 			);
+			recipeName.set(data.results.recipeName);
 			ingredients.set(formattedIngredients);
 			const formattedSteps = data.results.updateStepResponses.map((step) => ({
 				stepDescription: step.stepDescription,
@@ -52,8 +54,8 @@
 		}
 	}
 
-	function handleDeleteIngredient(ingredient) {
-		ingredients.update((ingredients) => ingredients.filter((i) => i !== ingredient));
+	function handleDeleteIngredient(index) {
+		ingredients.update((ingredients) => ingredients.filter((_, i) => i !== index));
 	}
 
 	function handleDeleteStep(index) {
@@ -124,6 +126,8 @@
 		<h1 class="font-bold px-6">{t('pages.dashboard.recipe.update.title')}</h1>
 
 		<div class="mt-8 pt-8 px-8 bg-white rounded-lg py-8 shadow">
+      <h2 class="text-xl font-bold px-6 mb-8">{convertToTitleCase($recipeName)}</h2>
+      <hr class="border-t border-gray-200 my-8" />
 			<div class="grid grid-cols-2 gap-x-16 gap-y-8 mt-4">
 				<div class="flex flex-col gap-1 px-6">
 					<Label>{t('pages.dashboard.recipe.update.detail.portion')}</Label>
@@ -152,7 +156,7 @@
 											>
 										</tr>
 									</thead>
-									{#each $ingredients as ingredient}
+									{#each $ingredients as ingredient, index}
 										<tr>
 											<td class="px-6 py-3">
                         <Input
@@ -167,7 +171,7 @@
 											<td class="px-6 py-3">
 												<Button
 													class="p-2 text-xs rounded-md text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-9000"
-													on:click={() => handleDeleteIngredient(ingredient)}
+													on:click={() => handleDeleteIngredient(index)}
 												>
 													<TrashBinOutline size="sm" />
 												</Button>

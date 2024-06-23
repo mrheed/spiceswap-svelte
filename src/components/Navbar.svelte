@@ -52,7 +52,7 @@
 				<Search
 					bind:value={$keyword}
 					size="md"
-					class="font-light mt-1 w-96 border focus:outline-none bg-white"
+					class="mt-1 w-96 border focus:outline-none bg-white"
 					placeholder={t('common.nav.search')}
 				/>
 			</form>

@@ -118,3 +118,7 @@ export function convertToTitleCase(string) {
 export function goToPrivateDetailRecipe(recipeSlug) {
   goto(`/dashboard/recipe/my-recipes/${recipeSlug}`);
 }
+
+export function goToPublicDetailRecipe(recipeSlug) {
+  goto(`/browse/recipes/${recipeSlug}`);
+}

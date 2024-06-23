@@ -4,7 +4,7 @@
 	import RecipePagination from '@spiceswap/components/Recipe/RecipePagination.svelte';
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
-	import { showToast } from '@spiceswap/utils/common';
+	import { generatePageTitleMeta, showToast } from '@spiceswap/utils/common';
 	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import { writable } from 'svelte/store';
 
@@ -40,6 +40,10 @@
 		getAllMyRecipes($page);
 	}
 </script>
+
+<svelte:head>
+  {@html generatePageTitleMeta(t('pages.dashboard.recipe.my-recipes.title'))}
+</svelte:head>
 
 <div class="my-8 px-48">
 	<h1 class="font-bold">{t('pages.dashboard.recipe.my-recipes.title')}</h1>

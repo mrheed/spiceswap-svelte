@@ -13,8 +13,8 @@
 	let menuItems = [
 		{ label: 'common.nav.profile', route: '/profile' },
 		{ label: 'common.nav.my-recipe', route: '/dashboard/recipe/my-recipes' },
-		{ label: 'common.nav.modification-request', route: '/modification-request' },
-		{ label: 'common.nav.bookmark', route: '/bookmark' },
+		{ label: 'common.nav.modification-request', route: '/dashboard/modification-request' },
+		{ label: 'common.nav.bookmark', route: '/dashboard/bookmark' },
 		{ label: 'common.nav.logout', action: () => authStore.logout() }
 	];
 

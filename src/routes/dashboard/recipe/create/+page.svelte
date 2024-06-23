@@ -6,7 +6,7 @@
 	import { t } from '@spiceswap/locale/i18n';
 	import { loadingStore } from '@spiceswap/stores/loadingStore';
 	import { pageStore } from '@spiceswap/stores/pageStore';
-	import { fileToBase64, generatePageTitleMeta, showToast } from '@spiceswap/utils/common';
+	import { fileToBase64, generatePageTitleMeta, goToPrivateDetailRecipe, showToast } from '@spiceswap/utils/common';
 	import { generateMessageFromResponse } from '@spiceswap/utils/fetch';
 	import { Button, Input, Label, Modal, Radio, RadioButton, Textarea } from 'flowbite-svelte';
 	import { FloppyDiskOutline, PlusOutline, TrashBinOutline } from 'flowbite-svelte-icons';
@@ -40,8 +40,8 @@
 		]);
 	}
 
-	function handleDeleteIngredient(ingredient) {
-		ingredients.set($ingredients.filter((i) => i.id !== ingredient.id));
+	function handleDeleteIngredient(index) {
+		ingredients.set($ingredients.filter((_, i) => i !== index));
 	}
 
 	function handleDeleteStep(index) {
@@ -73,6 +73,7 @@
 			const data = await response.json();
 			if (response.ok) {
 				showToast(t('pages.dashboard.recipe.create.save.success.title'), data.message, 'success');
+        goToPrivateDetailRecipe(data.results.recipeSlug);
 			} else {
 				showToast(
 					t('pages.dashboard.recipe.create.save.error.title'),
@@ -199,7 +200,7 @@
 											>
 										</tr>
 									</thead>
-									{#each $ingredients as ingredient}
+									{#each $ingredients as ingredient, index}
 										<tr>
 											<td class="px-6 py-3">
 												<Input
@@ -214,7 +215,7 @@
 											<td class="px-6 py-3">
 												<Button
 													class="p-2 text-xs rounded-md text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-9000"
-													on:click={() => handleDeleteIngredient(ingredient)}
+													on:click={() => handleDeleteIngredient(index)}
 												>
 													<TrashBinOutline size="sm" />
 												</Button>

@@ -4,13 +4,28 @@
 	import Bookmark from './Bookmark.svelte';
 	import { t } from '@spiceswap/locale/i18n';
 	import { convertToIndonesianDate, convertToTitleCase } from '@spiceswap/utils/common';
+	import Alert from '../Alert.svelte';
+	import { Spinner } from 'flowbite-svelte';
 
 	export let recipes = [];
 	export let withBookmark = true;
 	export let gridCount = 4;
+  export let isLoading = false;
 	export let detailLink = () => '#';
 </script>
 
+{#if isLoading}
+  <div class="mt-8 flex justify-center items-center h-full w-full">
+    <Spinner />
+  </div>
+{/if}
+{#if recipes.length === 0 && !isLoading}
+	<div class="mt-8 flex justify-center items-center h-full w-full">
+		<Alert type="warning" dismissed={false} dismissible={false} alertClass="w-1/2 justify-center">
+			<p class="text-gray-600">{t('common.no-data')}</p>
+		</Alert>
+	</div>
+{/if}
 <div class="grid grid-cols-{gridCount} mt-20 gap-x-4 gap-y-20">
 	{#each recipes as recipe}
 		<div class="relative bg-white rounded-lg shadow-2xl">
@@ -25,7 +40,9 @@
 				/>
 			</div>
 			<div class="flex flex-col justify-between pb-4 px-8 gap-2 -translate-y-16">
-				<a href={detailLink(recipe)} class="font-bold text-gray-600 text-title">{convertToTitleCase(recipe.recipeName)}</a>
+				<a href={detailLink(recipe)} class="font-bold text-gray-600 text-title"
+					>{convertToTitleCase(recipe.recipeName)}</a
+				>
 				<span class="text-gray-600 font-light text-sm"
 					>{convertToIndonesianDate(recipe.createdAt)}</span
 				>
