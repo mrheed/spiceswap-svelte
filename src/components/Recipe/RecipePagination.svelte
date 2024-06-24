@@ -4,6 +4,9 @@
   export let onPageChange;
 
   function handlePageChange(page) {
+    if (page < 1 || page > totalPages) {
+      return;
+    }
     if (onPageChange) {
       onPageChange(page);
     }

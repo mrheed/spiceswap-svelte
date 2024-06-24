@@ -1,3 +1,5 @@
+import { t } from "@spiceswap/locale/i18n"
+
 export const ROLES = {
   ADMIN: 'ADMIN',
   USER: 'USER'
@@ -41,4 +43,18 @@ export const RECIPE_TYPE = {
 export const MODIFICATION_REQUEST_TYPE = {
   IN: 'IN',
   OUT: 'OUT'
+}
+
+export const STATUS = {
+  WAITING: 'WAITING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  FAILED: 'FAILED'
+}
+
+export const MODIFICATION_REQUEST_STATUS = {
+  [STATUS.WAITING]: t('pages.dashboard.modification-request.out.list-status.waiting'),
+  [STATUS.ACCEPTED]: t('pages.dashboard.modification-request.out.list-status.accepted'),
+  [STATUS.REJECTED]: t('pages.dashboard.modification-request.out.list-status.rejected'),
+  [STATUS.FAILED]: t('pages.dashboard.modification-request.out.list-status.failed')
 }

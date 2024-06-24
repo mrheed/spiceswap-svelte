@@ -45,3 +45,27 @@ export const getOutboxModificationRequest = async (page) => {
     throw error;
   }
 }
+
+export const approveInboxModificationRequest = async (fromRecipeSlug) => {
+  try {
+    const response = await fetchV1Authorized(`modification-request/approve/${fromRecipeSlug}`, {
+      method: 'PUT'
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const rejectInboxModificationRequest = async (fromRecipeSlug) => {
+  try {
+    const response = await fetchV1Authorized(`modification-request/reject/${fromRecipeSlug}`, {
+      method: 'PUT'
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
