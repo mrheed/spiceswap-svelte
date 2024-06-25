@@ -173,7 +173,8 @@
 
 	const debounceFetchDataIngredients = _.debounce(getDataIngredients, 500);
 
-	$: $toggleFetch || debounceFetchDataIngredients($pageNumber, $keyword);
+	$: debounceFetchDataIngredients($pageNumber, $keyword);
+	$: if ($toggleFetch) debounceFetchDataIngredients($pageNumber, $keyword);
 </script>
 
 <svelte:head>

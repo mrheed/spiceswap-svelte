@@ -47,7 +47,7 @@ export const MODIFICATION_REQUEST_TYPE = {
 
 export const STATUS = {
   WAITING: 'WAITING',
-  ACCEPTED: 'ACCEPTED',
+  ACCEPTED: 'APPROVED',
   REJECTED: 'REJECTED',
   FAILED: 'FAILED'
 }
@@ -57,4 +57,9 @@ export const MODIFICATION_REQUEST_STATUS = {
   [STATUS.ACCEPTED]: t('pages.dashboard.modification-request.out.list-status.accepted'),
   [STATUS.REJECTED]: t('pages.dashboard.modification-request.out.list-status.rejected'),
   [STATUS.FAILED]: t('pages.dashboard.modification-request.out.list-status.failed')
+}
+
+export const USER_STATUS = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
 }

@@ -1,6 +1,5 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { debounce } from 'lodash';
 	import {
 		approveInboxModificationRequest,
 		getInboxModificationRequest,
@@ -85,7 +84,7 @@
 		page.set(_pageNumber - 1);
 	};
 
-	const approveRequest = async (fromRecipeSlug) => {
+	const fetchApproveRequest = async (fromRecipeSlug) => {
 		const response = await approveInboxModificationRequest(fromRecipeSlug);
 		const data = await response.json();
 		if (response.ok) {
@@ -102,10 +101,9 @@
 				'error'
 			);
 		}
-		reload.set(false);
 	};
 
-	const rejectRequest = async (fromRecipeSlug) => {
+	const fetchRejectRequest = async (fromRecipeSlug) => {
 		const response = await rejectInboxModificationRequest(fromRecipeSlug);
 		const data = await response.json();
 		if (response.ok) {
@@ -122,27 +120,20 @@
 				'error'
 			);
 		}
-		reload.set(false);
 	};
 
-
-	const debouncedFetchInbox = debounce(async (page) => {
-		await loadingStore.wrapFn(async () => await fetchInboxModificationRequest(page));
-	}, 300);
-
-	const debouncedFetchOutbox = debounce(async (page) => {
-		await loadingStore.wrapFn(async () => await fetchOutboxModificationRequest(page));
-	}, 300);
+  const approveRequest = async (fromRecipeSlug) => loadingStore.wrapFn(async () => await fetchApproveRequest(fromRecipeSlug))
+  const rejectRequest = async (fromRecipeSlug) => loadingStore.wrapFn(async () => await fetchRejectRequest(fromRecipeSlug))
 
 	$: if ($type[MODIFICATION_REQUEST_TYPE.IN] && $type[MODIFICATION_REQUEST_TYPE.OUT] === false) {
 		previousType.set(MODIFICATION_REQUEST_TYPE.IN);
-		debouncedFetchInbox($page);
+		loadingStore.wrapFn(async () => await fetchInboxModificationRequest($page));
 	} else if (
 		$type[MODIFICATION_REQUEST_TYPE.OUT] &&
 		$type[MODIFICATION_REQUEST_TYPE.IN] === false
 	) {
 		previousType.set(MODIFICATION_REQUEST_TYPE.OUT);
-		debouncedFetchOutbox($page);
+		loadingStore.wrapFn(async () => await fetchOutboxModificationRequest($page));
 	}
 
 	$: if ($reload) {
@@ -151,6 +142,7 @@
 		} else if ($type[MODIFICATION_REQUEST_TYPE.OUT]) {
 			loadingStore.wrapFn(async () => await fetchOutboxModificationRequest($page));
 		}
+    reload.set(false)
 	}
 
 	$: {

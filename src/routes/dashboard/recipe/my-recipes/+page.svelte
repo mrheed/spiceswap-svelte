@@ -11,8 +11,10 @@
 	const recipes = writable([]);
 	const page = writable(0);
 	const totalPages = writable(0);
+  const isLoading = writable(true)
 
 	const fetchAllMyRecipes = async (page) => {
+    isLoading.set(true)
 		const response = await getAllMyRecipesPaginate(page);
 		const data = await response.json();
 		if (response.ok) {
@@ -25,6 +27,7 @@
 				'error'
 			);
 		}
+    isLoading.set(false)
 	};
 
 	const getAllMyRecipes = async (page) =>
@@ -36,9 +39,7 @@
 
 	const getMyRecipeDetailLink = (recipe) => `/dashboard/recipe/my-recipes/${recipe.recipeSlug}`;
 
-	$: {
-		getAllMyRecipes($page);
-	}
+	$: getAllMyRecipes($page);
 </script>
 
 <svelte:head>
@@ -51,6 +52,7 @@
 		recipes={$recipes}
 		withBookmark={false}
 		gridCount={3}
+    isLoading={$isLoading}
 		detailLink={getMyRecipeDetailLink}
 	/>
 	<div class="flex justify-center mt-8">
