@@ -182,3 +182,33 @@ export const updateDetailRecipeData = async (recipeSlug, data) => {
     throw error
   }
 }
+
+export const getManageRecipes = async (page = 0, keyword = '') => {
+  try {
+    const response = await fetchV1Authorized(`manage-recipe?page=${page}&keyword=${keyword}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const updateStatusRecipe = async (recipeSlug) => {
+  try {
+    const response = await fetchV1Authorized(`manage-recipe/status/${recipeSlug}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
