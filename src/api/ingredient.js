@@ -1,4 +1,4 @@
-import { fetchV1Authorized } from "@spiceswap/utils/fetch";
+import { fetchV1, fetchV1Authorized } from "@spiceswap/utils/fetch";
 
 export const getIngredients = async (page = 0, keyword = '') => {
   try {
@@ -51,6 +51,21 @@ export const updateIngredient = async (ingredientSlug, data) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const getHomeIngredients = async () => {
+  try {
+    const response = await fetchV1(`browse-recipe/ingredient`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
     return response
   } catch (error) {

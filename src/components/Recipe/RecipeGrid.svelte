@@ -47,8 +47,7 @@
 					>{convertToIndonesianDate(recipe.createdAt)}</span
 				>
 				<span class="italic font-light text-sm">
-					{recipe.totalRating}
-					{t('common.review')}
+					{t('common.review', { count: recipe.totalReviewers })}
 				</span>
 			</div>
 			<div

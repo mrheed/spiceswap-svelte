@@ -212,3 +212,18 @@ export const updateStatusRecipe = async (recipeSlug) => {
     throw error
   }
 }
+
+export const getAllBookmarkedRecipesPaginate = async (page = 0) => {
+  try {
+    const response = await fetchV1Authorized(`recipe/get-all-bookmarked-recipes?page=${page}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}

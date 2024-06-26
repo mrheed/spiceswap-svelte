@@ -15,9 +15,9 @@ function createAuth() {
 
   async function logout() {
     await loadingStore.wrapFn(async () => {
-      // await logoutUser();
-      // localStorage.removeItem('accessToken');
-      // localStorage.removeItem('refreshToken');
+      await logoutUser();
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       update(state => ({ ...state, isAuthenticated: false }));
     })
   }
