@@ -68,3 +68,5 @@ export const RECIPE_STATUS = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE'
 }
+
+export const MAX_RATING = 5

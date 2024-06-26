@@ -26,10 +26,15 @@ export default {
     "common.recipe.unbookmark.error": "Gagal Menghapus Resep dari Simpanan",
     "common.recipe.review.title": "Ulasan",
     "common.recipe.review.button": "Tulis Ulasan",
+    "common.recipe.review.button.edit": "Edit Ulasan",
+    "common.recipe.review.button.delete": "Hapus Ulasan",
     "common.recipe.review.rating": "Beri Rating",
+    "common.recipe.review.no-review": "Belum ada ulasan",
     "common.recipe.review.placeholder": "Tulis ulasan Anda...",
     "common.recipe.review.success.title": "Ulasan berhasil ditulis",
     "common.recipe.review.error.title": "Gagal menulis ulasan",
+    "common.recipe.review.delete.success.title": "Ulasan berhasil dihapus",
+    "common.recipe.review.delete.error.title": "Gagal menghapus ulasan",
     "common.dropzone.upload": "<span class='font-semibold'>Klik atau seret file</span> untuk mengunggah",
     "common.dropzone.format": "Format tidak terbatas",
     "common.table.pagination.range": "Menampilkan <span class='font-semibold text-gray-900 dark:text-white'>{{min}}-{{max}}</span> dari <span class='font-semibold text-gray-90 dark:text-white'>{{total}}</span>",
@@ -278,6 +283,7 @@ export default {
     "pages.dashboard.recipes.show-recipe.status": "Status",
     "pages.dashboard.recipes.toggle-status-success": "Successfully toggle recipe status",
     "pages.dashboard.recipes.toggle-status-error": "Error toggle recipe status",
+
   },
   en: {
 
