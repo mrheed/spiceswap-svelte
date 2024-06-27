@@ -174,7 +174,7 @@
 			{t('pages.dashboard.modification-request.create')}
 		</Button>
 		<hr class="my-8" />
-		<Tabs contentClass="p-4">
+		<Tabs contentClass="px-4">
 			<TabItem bind:open={$type[MODIFICATION_REQUEST_TYPE.IN]}>
 				<div slot="title" class="font-semibold flex gap-2 items-center">
 					<ArrowDownToBracketOutline size="sm" />
@@ -194,7 +194,7 @@
 							</div>
 						{/if}
 						{#each $inboxModificationRequest as modificationRequest}
-							<li class="pb-3 sm:pb-4">
+							<li class="py-3 sm:py-4">
 								<div class="flex space-x-4 rtl:space-x-reverse">
 									<div class="flex-1 min-w-0">
 										<p class="font-semibold truncate dark:text-white">
@@ -283,7 +283,7 @@
 							</div>
 						{/if}
 						{#each $outboxModificationRequest as modificationRequest}
-							<li class="pb-3 sm:pb-4">
+							<li class="py-3 sm:py-4">
 								<div class="flex items-center space-x-4 rtl:space-x-reverse">
 									<div class="flex-1 min-w-0">
 										<p class="font-semibold truncate dark:text-white">

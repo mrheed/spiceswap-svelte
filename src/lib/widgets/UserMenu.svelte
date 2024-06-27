@@ -11,7 +11,7 @@
 	export let email = 'user@email.com'; // "neil.sims@flowbite.com",
 
 	let menuItems = [
-		{ label: 'common.nav.profile', route: '/profile' },
+		{ label: 'common.nav.profile', route: '/dashboard/profile' },
 		{ label: 'common.nav.my-recipe', route: '/dashboard/recipe/my-recipes' },
 		{ label: 'common.nav.modification-request', route: '/dashboard/modification-request' },
 		{ label: 'common.nav.bookmark', route: '/dashboard/recipe/bookmarked' },
