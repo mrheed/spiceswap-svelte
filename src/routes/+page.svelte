@@ -135,7 +135,7 @@
 				</div>
 			</nav>
 
-			<RecipeGrid recipes={$popularRecipes} isLoading={$isPopularRecipeLoading} gridCount={3} />
+			<RecipeGrid recipes={$popularRecipes} isLoading={$isPopularRecipeLoading} gridCount={4} />
 		</div>
 	</section>
 
