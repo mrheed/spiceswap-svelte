@@ -6,12 +6,17 @@
 	import { convertToIndonesianDate, convertToTitleCase } from '@spiceswap/utils/common';
 	import Alert from '../Alert.svelte';
 	import { Spinner } from 'flowbite-svelte';
+	import { writable } from 'svelte/store';
+	import { authStore } from '@spiceswap/stores/authStore';
 
 	export let recipes = [];
 	export let withBookmark = true;
 	export let gridCount = 4;
   export let isLoading = false;
-	export let detailLink = () => '#';
+	export let detailLink = (recipe) => `browse/recipes/${recipe.recipeSlug}`;
+
+  const isAuthenticated = writable(false)
+  $: isAuthenticated.set($authStore.isAuthenticated)
 </script>
 
 {#if isLoading}
@@ -21,14 +26,14 @@
 {/if}
 {#if recipes.length === 0 && !isLoading}
 	<div class="mt-8 flex justify-center items-center h-full w-full">
-		<Alert type="warning" dismissed={false} dismissible={false} alertClass="w-1/2 justify-center">
-			<p class="text-gray-600">{t('common.no-data')}</p>
+		<Alert type="warning" dismissed={false} dismissible={false} alertClass="w-full justify-center">
+			<p class="text-gray-600">{t('common.no-recipes')}</p>
 		</Alert>
 	</div>
 {/if}
 <div class="grid grid-cols-{gridCount} mt-20 gap-x-4 gap-y-20">
 	{#each recipes as recipe}
-		<div class="relative bg-white rounded-lg shadow-2xl">
+		<div class="relative bg-white rounded-lg shadow">
 			<div class="h-72 relative hover:grow flex items-center justify-center">
 				<Image
 					props={{
@@ -62,7 +67,7 @@
 						{/if}
 					{/each}
 				</i>
-				{#if withBookmark}
+				{#if withBookmark && $isAuthenticated}
 					<Bookmark {recipe} />
 				{/if}
 			</div>

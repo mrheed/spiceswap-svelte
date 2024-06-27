@@ -192,12 +192,12 @@
 	{/if}
 
 	<hr />
-	<h2 class="text-2xl font-bold">{t('common.recipe.review.title')}</h2>
+	<h2 class="text-2xl mb-2 font-bold">{t('common.recipe.review.title')}</h2>
 	{#if $reviews.length == 0}
 		<p class="text-gray-500 dark:text-gray-400">{t('common.recipe.review.no-review')}</p>
 	{/if}
 	{#each $reviews as review}
-		<div class="flex items-center mb-4">
+		<div class="flex items-center mb-2">
 			<div class="font-medium dark:text-white">
 				<p>{review.username}</p>
 			</div>

@@ -29,6 +29,8 @@
 				generateMessageFromResponse(data),
 				'error'
 			);
+			recipes.set([]);
+			totalPages.set(0);
 		}
 		loadingRecepies.set(false);
 	};

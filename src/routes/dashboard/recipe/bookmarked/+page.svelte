@@ -26,8 +26,10 @@
 				generateMessageFromResponse(data),
 				'error'
 			);
+			recipes.set([]);
+			totalPages.set(0);
 		}
-    isLoading.set(false)
+		isLoading.set(false);
 	};
 
 	const getAllBookmarkedRecipes = async (page) =>

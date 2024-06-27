@@ -227,3 +227,18 @@ export const getAllBookmarkedRecipesPaginate = async (page = 0) => {
     throw error
   }
 }
+
+export const getPopularRecipes = async () => {
+  try {
+    const response = await fetchV1Authorized('browse-recipe', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
