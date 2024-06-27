@@ -242,3 +242,33 @@ export const getPopularRecipes = async () => {
     throw error
   }
 }
+
+export const getRecipeHistory = async (recipeSlug, page) => {
+  try {
+    const response = await fetchV1Authorized(`browse-recipe/get-all-recipe-history/${recipeSlug}?page=${page}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const getRecipeHistoryDetail = async (historySlug) => {
+  try {
+    const response = await fetchV1Authorized(`browse-recipe/get-recipe-history-detail/${historySlug}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}

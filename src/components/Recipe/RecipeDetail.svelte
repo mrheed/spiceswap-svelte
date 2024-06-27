@@ -150,6 +150,7 @@
 						</Bookmark>
 					{/if}
 					<Button class="flex gap-4 justify-start" color="yellow"
+          on:click={() => goto(`/browse/recipes/${recipe.recipeSlug}/history`)}
 						><ClockOutline />{t('pages.dashboard.recipe.detail.changes-history')}</Button
 					>
 					{#if $isAuthenticated && $isOwner}

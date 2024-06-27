@@ -15,7 +15,9 @@ export const SCENES = {
   MY_RECIPE: 'my_recipe',
   DETAIL_RECIPE: 'detail_recipe',
   INGREDIENTS: 'ingredients_management',
-  USERS: 'user_management'
+  USERS: 'user_management',
+  BOOKMARKED_RECIPE: 'bookmarked_recipe',
+  MODIFICATION_REQUEST: 'modification_request'
 }
 
 export const ROUTE_TO_SCENE = {
@@ -27,11 +29,13 @@ export const ROUTE_TO_SCENE = {
   '/dashboard/ingredients': SCENES.INGREDIENTS,
   '/dashboard/recipe': SCENES.RECIPE,
   '/dashboard/users': SCENES.USERS,
+  '/dashboard/modification-request': SCENES.MODIFICATION_REQUEST,
   '/dashboard/recipe/my-recipes': SCENES.MY_RECIPE,
+  '/dashboard/recipe/bookmarked': SCENES.BOOKMARKED_RECIPE,
 }
 
 export const SCENES_FORBIDDEN = {
-  [ROLES.ADMIN]: [SCENES.MY_RECIPE, SCENES.CREATE_RECIPE],
+  [ROLES.ADMIN]: [SCENES.MY_RECIPE, SCENES.CREATE_RECIPE, SCENES.BOOKMARKED_RECIPE, SCENES.MODIFICATION_REQUEST],
   [ROLES.USER]: [SCENES.INGREDIENTS, SCENES.RECIPE, SCENES.USERS]
 }
 

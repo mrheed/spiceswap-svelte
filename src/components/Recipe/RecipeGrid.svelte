@@ -31,7 +31,7 @@
 		</Alert>
 	</div>
 {/if}
-<div class="grid grid-cols-{gridCount} mt-20 gap-x-4 gap-y-20">
+<div class="grid grid-cols-{gridCount} w-full mt-20 gap-x-4 gap-y-20">
 	{#each recipes as recipe}
 		<div class="relative bg-white rounded-lg shadow">
 			<div class="h-72 relative hover:grow flex items-center justify-center">

@@ -294,7 +294,24 @@ export default {
     "pages.dashboard.recipes.show-recipe.status": "Status",
     "pages.dashboard.recipes.toggle-status-success": "Successfully toggle recipe status",
     "pages.dashboard.recipes.toggle-status-error": "Error toggle recipe status",
-
+    "pages.dashboard.recipe.detail.history.title": "Riwayat Perubahan Resep",
+    "pages.dashboard.recipe.detail.history.updated-by": "Diperbarui oleh {{updatedBy}}",
+    "pages.dashboard.recipe.detail.history.no-history": "Tidak ada riwayat perubahan ditemukan",
+    "pages.dashboard.recipe.detail.history.view": "Lihat Detail",
+    "pages.dashboard.recipe.detail.history-detail.title": "Riwayat Perubahan Resep",
+    "pages.dashboard.recipe.detail.history-detail.no-history": "Tidak ada riwayat perubahan ditemukan",
+    "pages.dashboard.recipe.detail.history-detail.history-updated-at-by": "Diperbarui pada {{updatedAt}} oleh {{updatedBy}}",
+    "pages.dashboard.recipe.detail.history-detail.before": "Sebelumnya",
+    "pages.dashboard.recipe.detail.history-detail.after": "Sekarang",
+    "pages.dashboard.recipe.detail.history-detail.portion": "Porsi",
+    "pages.dashboard.recipe.detail.history-detail.ingredients": "Bahan",
+    "pages.dashboard.recipe.detail.history-detail.no-portion": "Tidak ada perubahan porsi ditemukan",
+    "pages.dashboard.recipe.detail.history-detail.no-ingredients": "Tidak ada perubahan bahan ditemukan",
+    "pages.dashboard.recipe.detail.history-detail.no-steps": "Tidak ada perubahan langkah ditemukan",
+    "pages.dashboard.recipe.detail.history-detail.ingredient.name": "Nama Bahan",
+    "pages.dashboard.recipe.detail.history-detail.ingredient.amount": "Jumlah",
+    "pages.dashboard.recipe.detail.history-detail.step.title": "Langkah",
+    "pages.dashboard.recipe.detail.history-detail.step.description": "Deskripsi"
   },
   en: {
 
