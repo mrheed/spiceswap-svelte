@@ -50,6 +50,9 @@ export function fileToBase64(file) {
  * @returns {Promise<File>} - A promise that resolves with the File object.
  */
 export async function urlToFile(imageUrl) {
+  if (!imageUrl.startsWith('https://')) {
+    imageUrl = imageUrl.replace('http://', 'https://');
+  }
   const response = await fetch(imageUrl);
   const blob = await response.blob();
   const fileName = imageUrl.split('/').pop();

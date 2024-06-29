@@ -8,7 +8,8 @@
 	import { writable } from 'svelte/store';
 
 	export let recipe;
-  export let buttonClass = '';
+	export let buttonClass = '';
+	export let getIsBookmarked = () => {};
 
 	const isBookmarked = writable(recipe.isBookmarked === true);
 
@@ -57,5 +58,5 @@
 			class="w-6 h-6 text-gray-500 hover:text-yellow-400 transition-all"
 		/>
 	{/if}
-  <slot />
+	<slot />
 </button>
